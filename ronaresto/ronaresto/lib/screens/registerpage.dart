@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ronaresto/services/database.dart';
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -20,6 +21,10 @@ class RegisterForm extends StatefulWidget{
 
 class _RegisterFormState extends State<RegisterForm> {
   final _fk = GlobalKey<FormState>();
+  final tecEmail = TextEditingController();
+  final tecPass = TextEditingController();
+  final tecConPass = TextEditingController();
+  final tecPhone = TextEditingController();
   FocusNode fn;
 
   @override
@@ -48,6 +53,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 labelText: 'E-mail adres',
               ),
               focusNode: fn,
+              controller: tecEmail,
               validator: (value){
                 if (value.isEmpty) {
                   return "Fout";
@@ -61,6 +67,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 labelText: 'Wachtwoord',
               ),
               obscureText: true,
+              controller: tecPass,
               validator: (value){
                 if (value.isEmpty) {
                   return "Fout";
@@ -74,6 +81,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 labelText: 'Wachtwoord bevestigen',
               ),
               obscureText: true,
+              controller: tecConPass,
               validator: (value){
                 if (value.isEmpty) {
                   return "Fout";
@@ -86,7 +94,7 @@ class _RegisterFormState extends State<RegisterForm> {
               decoration: InputDecoration(
                 labelText: 'Tel.',
               ),
-              obscureText: true,
+              controller: tecPhone,
               validator: (value){
                 if (value.isEmpty) {
                   return "Fout";
@@ -97,10 +105,8 @@ class _RegisterFormState extends State<RegisterForm> {
             const SizedBox(height: 60),
             ElevatedButton(
               onPressed: () {
-                if (_fk.currentState.validate()) {
-                  Scaffold
-                      .of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
+                if (_fk.currentState.validate() && tecPass.text == tecConPass.text) {
+                  register(tecEmail.text, tecPass.text, tecPhone.text);
                 }
                 else {
                   fn.requestFocus();

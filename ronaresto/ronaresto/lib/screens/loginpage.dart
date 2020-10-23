@@ -22,6 +22,8 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _fk = GlobalKey<FormState>();
+  final tecEmail = TextEditingController();
+  final tecPassword = TextEditingController();
   FocusNode fn;
 
   @override
@@ -34,6 +36,8 @@ class _LoginFormState extends State<LoginForm> {
   @override
   void dispose() {
     fn.dispose();
+    tecEmail.dispose();
+    tecPassword.dispose();
 
     super.dispose();
   }
@@ -47,9 +51,10 @@ class _LoginFormState extends State<LoginForm> {
         children: <Widget>[
           TextFormField(
             decoration: InputDecoration(
-              labelText: 'Enter your email adress',
+              labelText: '${user_id}',
             ),
             focusNode: fn,
+            controller: tecEmail,
             validator: (value){
               if (value.isEmpty) {
                 return "Please enter your email adress";
@@ -63,6 +68,7 @@ class _LoginFormState extends State<LoginForm> {
               labelText: 'Enter your password',
             ),
             obscureText: true,
+            controller: tecPassword,
             validator: (value){
               if (value.isEmpty) {
                 return "Please enter your password";
@@ -73,14 +79,7 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 60),
           ElevatedButton(
               onPressed: () {
-                  if (_fk.currentState.validate()) {
-                    Scaffold
-                        .of(context)
-                        .showSnackBar(SnackBar(content: Text('Processing Data')));
-                  }
-                  else {
-                    fn.requestFocus();
-                  }
+                  login(tecEmail.text, tecPassword.text);
               },
               child: Text('Inloggen'),
           ),
@@ -90,3 +89,5 @@ class _LoginFormState extends State<LoginForm> {
   }
 
 }
+
+

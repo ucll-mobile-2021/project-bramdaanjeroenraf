@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'screens/homepage.dart';
-import 'package:ronaresto/services/database.dart';
+import 'package:ronaresto/services/htmlloader.dart';
 
 void main() {
-  connect();
+  loadMeasures();
   runApp(MyApp());
 }
 
