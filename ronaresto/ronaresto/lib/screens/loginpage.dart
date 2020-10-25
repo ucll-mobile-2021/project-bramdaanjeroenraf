@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ronaresto/services/database.dart';
+import 'qrpage.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key key}) : super(key: key);
@@ -80,6 +81,10 @@ class _LoginFormState extends State<LoginForm> {
           ElevatedButton(
               onPressed: () {
                   login(tecEmail.text, tecPassword.text);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (contex) => QrPage()),
+                  );
               },
               child: Text('Inloggen'),
           ),
