@@ -22,7 +22,7 @@ dynamic connect() async {
 dynamic login(String email, String password)  async {
   var conn = await MySqlConnection.connect(settings);
   String passwordHash = Password.hash(password, PBKDF2());
-  var results =  await conn.query('SELECT * FROM users WHERE email = ? AND wachtwoord = ?', [email, passwordHash]);
+  var results =  await conn.query('SELECT * FROM Users WHERE email = ? AND wachtwoord = ?', [email, passwordHash]);
   if (results.length == 1) {
     for (var row in results) {
       user_id = row[0];
@@ -35,6 +35,6 @@ dynamic login(String email, String password)  async {
 dynamic register(String email, String password, String phone) async {
   String passwordHash = Password.hash(password, PBKDF2());
   var conn = await MySqlConnection.connect(settings);
-  var results =  await conn.query('INSERT INTO users (email, wachtwoord, telefoonnummer) VALUES (?, ?, ?)', [email, passwordHash, phone]);
+  var results =  await conn.query('INSERT INTO Users (email, wachtwoord, telefoonnummer) VALUES (?, ?, ?)', [email, passwordHash, phone]);
   conn.close();
 }
