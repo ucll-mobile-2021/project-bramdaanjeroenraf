@@ -10,19 +10,10 @@ var settings = new ConnectionSettings(
 
 int user_id;
 
-dynamic connect() async {
-  var conn = await MySqlConnection.connect(settings);
-  var results =  await conn.query('SELECT * FROM users');
-  for (var row in results) {
-    print('Name: ${row[0]}, email: ${row[1]}');
-  }
-  conn.close();
-}
-
-dynamic login(String email, String password)  async {
+void login(String email, String password)  async {
   var conn = await MySqlConnection.connect(settings);
   String passwordHash = Password.hash(password, PBKDF2());
-  var results =  await conn.query('SELECT * FROM Users WHERE email = ? AND wachtwoord = ?', [email, passwordHash]);
+  var results =  await conn.query('SELECT * FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
   if (results.length == 1) {
     for (var row in results) {
       user_id = row[0];
@@ -32,9 +23,19 @@ dynamic login(String email, String password)  async {
   conn.close();
 }
 
-dynamic register(String email, String password, String phone) async {
+void register(String name, String email, String password, String phone) async {
   String passwordHash = Password.hash(password, PBKDF2());
   var conn = await MySqlConnection.connect(settings);
-  var results =  await conn.query('INSERT INTO Users (email, wachtwoord, telefoonnummer) VALUES (?, ?, ?)', [email, passwordHash, phone]);
+  var results =  await conn.query('INSERT INTO User (email, password, telephonenumber, name) VALUES (?, ?, ?, ?)', [email, passwordHash, phone, name]);
   conn.close();
+}
+
+Future<Results> findByMail(String email) async {
+  var conn = await MySqlConnection.connect(settings);
+  var results =  await conn.query('SELECT * FROM User WHERE email = ?', [email]);
+  conn.close();
+  if(results.length > 0) {
+    return results;
+  }
+  return null;
 }

@@ -21,22 +21,24 @@ class RegisterForm extends StatefulWidget{
 
 class _RegisterFormState extends State<RegisterForm> {
   final _fk = GlobalKey<FormState>();
+  final tecName = TextEditingController();
   final tecEmail = TextEditingController();
   final tecPass = TextEditingController();
   final tecConPass = TextEditingController();
   final tecPhone = TextEditingController();
-  FocusNode fn;
 
   @override
   void initState() {
     super. initState();
-
-    fn = FocusNode();
   }
 
   @override
   void dispose() {
-    fn.dispose();
+    tecName.dispose();
+    tecEmail.dispose();
+    tecPass.dispose();
+    tecConPass.dispose();
+    tecPhone.dispose();
 
     super.dispose();
   }
@@ -50,13 +52,27 @@ class _RegisterFormState extends State<RegisterForm> {
           children: <Widget>[
             TextFormField(
               decoration: InputDecoration(
+                labelText: 'Volledige naam',
+              ),
+              controller: tecName,
+              validator: (value){
+                if (value.isEmpty) {
+                  return "Fout";
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              decoration: InputDecoration(
                 labelText: 'E-mail adres',
               ),
-              focusNode: fn,
               controller: tecEmail,
               validator: (value){
                 if (value.isEmpty) {
                   return "Fout";
+                }
+                else if (findByMail(tecEmail.text) != null){
+                  return "Email is reed geregistreerd";
                 }
                 return null;
               },
@@ -106,10 +122,10 @@ class _RegisterFormState extends State<RegisterForm> {
             ElevatedButton(
               onPressed: () {
                 if (_fk.currentState.validate() && tecPass.text == tecConPass.text) {
-                  register(tecEmail.text, tecPass.text, tecPhone.text);
+                  register(tecName.text, tecEmail.text, tecPass.text, tecPhone.text);
+                  Navigator.pop(context);
                 }
                 else {
-                  fn.requestFocus();
                 }
               },
               child: Text('Registreren'),

@@ -22,5 +22,6 @@ void loadMeasures() async {
 }
 
 String getMeasures() {
+  loadMeasures();
   return _measures;
 }

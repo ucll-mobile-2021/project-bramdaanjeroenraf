@@ -24,18 +24,14 @@ class _LoginFormState extends State<LoginForm> {
   final _fk = GlobalKey<FormState>();
   final tecEmail = TextEditingController();
   final tecPassword = TextEditingController();
-  FocusNode fn;
 
   @override
   void initState() {
     super. initState();
-
-    fn = FocusNode();
   }
 
   @override
   void dispose() {
-    fn.dispose();
     tecEmail.dispose();
     tecPassword.dispose();
 
@@ -47,17 +43,16 @@ class _LoginFormState extends State<LoginForm> {
     return Form(
       key: _fk,
       child: Column(
-          mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextFormField(
             decoration: InputDecoration(
-              labelText: '${user_id}',
+              labelText: 'Email',
             ),
-            focusNode: fn,
             controller: tecEmail,
             validator: (value){
               if (value.isEmpty) {
-                return "Please enter your email adress";
+                return "Fout";
               }
               return null;
             },
@@ -65,13 +60,13 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 30),
           TextFormField(
             decoration: InputDecoration(
-              labelText: 'Enter your password',
+              labelText: 'Wachtwoord',
             ),
             obscureText: true,
             controller: tecPassword,
             validator: (value){
               if (value.isEmpty) {
-                return "Please enter your password";
+                return "Fout";
               }
               return null;
             },
