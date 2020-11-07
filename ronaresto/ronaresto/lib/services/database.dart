@@ -10,7 +10,7 @@ var settings = new ConnectionSettings(
 
 int user_id;
 
-void login(String email, String password)  async {
+Future<bool> login(String email, String password)  async {
   var conn = await MySqlConnection.connect(settings);
   String passwordHash = Password.hash(password, PBKDF2());
   var results =  await conn.query('SELECT * FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
@@ -19,8 +19,12 @@ void login(String email, String password)  async {
       user_id = row[0];
     }
     print(user_id);
+    conn.close();
+    return true;
+  }else{
+    conn.close();
+    return false;
   }
-  conn.close();
 }
 
 void register(String name, String email, String password, String phone) async {
