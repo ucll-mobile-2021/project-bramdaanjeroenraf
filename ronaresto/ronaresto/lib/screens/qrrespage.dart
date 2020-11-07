@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class QrResPage extends StatelessWidget {
-  final String result;
-  QrResPage({Key key, @required String this.result}) : super(key: key);
+
+  final String restaurant_name;
+  final int restaurant_tafel;
+  final String restaurant_id;
+  final String restaurant_location;
+
+  QrResPage({Key key, @required String this.restaurant_name, int this.restaurant_tafel, String this.restaurant_id, String this.restaurant_location}) : super(key: key);
 
 
   @override
@@ -32,8 +37,10 @@ class QrResPage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 30),
-            Text(result.split(";").first, style: TextStyle(fontSize: 30)),
-            Text('tafel: '+result.split(";").last, style: TextStyle(fontSize: 20)),
+            Text(restaurant_name, style: TextStyle(fontSize: 30)),
+            Text(restaurant_location, style: TextStyle(fontSize: 12)),
+            Text('ID: '+restaurant_id, style: TextStyle(fontSize: 20)),
+            Text('tafel nr: '+restaurant_tafel.toString(), style: TextStyle(fontSize: 20)),
           ],
         ),
       ),

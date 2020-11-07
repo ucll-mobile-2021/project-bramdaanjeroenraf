@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:ronaresto/screens/qrrespage.dart';
+import 'package:ronaresto/services/database.dart';
 
 class QrPage extends StatelessWidget {
   QrPage({Key key}) : super(key: key);
@@ -61,10 +62,21 @@ class QrPage extends StatelessWidget {
                 onPressed: () {
                   final scanResult = _scanQr();
                   scanResult.then((resp) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (contex) => QrResPage(result: resp)),
-                    );
+
+                    String name = resp.split(";").first;
+                    int tafel = 0;
+                    if( resp.split(";").length == 2){
+                      tafel = int.parse( resp.split(";").last );
+                    }
+                    var info = findRestaurant(name);
+                    info.then((resp2) {
+                      // info
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (contex) => QrResPage(restaurant_name: name, restaurant_tafel: tafel, restaurant_id: resp2[0], restaurant_location: resp2[2])),
+                      ); // , ipv ;
+
+                    });
                   });
                 },
 

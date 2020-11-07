@@ -43,3 +43,24 @@ Future<Results> findByMail(String email) async {
   }
   return null;
 }
+
+
+
+
+Future<List<dynamic>> findRestaurant(String name)  async {
+  var conn = await MySqlConnection.connect(settings);
+  var results =  await conn.query('SELECT `restaurant_id`, `name`, `location` FROM `Restaurant` WHERE name = ?', [name]);
+
+  var info = new List(3);
+
+  if (results.length > 0) {
+    for (var row in results) {
+      info[0] = row[0].toString();
+      info[1] = row[1].toString();
+      info[2] = row[2].toString();
+    }
+    print('resto ID'+info[0].toString());
+  }
+  conn.close();
+  return info;
+}
