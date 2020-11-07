@@ -8,17 +8,18 @@ var settings = new ConnectionSettings(
     password: 'Rf1I4vFY8P',
     db: 'ZdZsbXqf4M');
 
-int user_id;
+int userId;
+bool isMailFound =  false;
 
 void login(String email, String password)  async {
   var conn = await MySqlConnection.connect(settings);
   String passwordHash = Password.hash(password, PBKDF2());
-  var results =  await conn.query('SELECT * FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
+  Results results =  await conn.query('SELECT * FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
   if (results.length == 1) {
     for (var row in results) {
-      user_id = row[0];
+      userId = row[0];
     }
-    print(user_id);
+    print(userId);
   }
   conn.close();
 }
@@ -26,16 +27,13 @@ void login(String email, String password)  async {
 void register(String name, String email, String password, String phone) async {
   String passwordHash = Password.hash(password, PBKDF2());
   var conn = await MySqlConnection.connect(settings);
-  var results =  await conn.query('INSERT INTO User (email, password, telephonenumber, name) VALUES (?, ?, ?, ?)', [email, passwordHash, phone, name]);
+  await conn.query('INSERT INTO User (email, password, telephonenumber, name) VALUES (?, ?, ?, ?)', [email, passwordHash, phone, name]);
   conn.close();
 }
 
-Future<Results> findByMail(String email) async {
+void findByMail(String email) async {
   var conn = await MySqlConnection.connect(settings);
-  var results =  await conn.query('SELECT * FROM User WHERE email = ?', [email]);
+  Results results =  await conn.query('SELECT COUNT(user_id) FROM User WHERE email = ?', [email]);
   conn.close();
-  if(results.length > 0) {
-    return results;
-  }
-  return null;
+  isMailFound = results.fields.first != 0;
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ronaresto/services/database.dart';
+import 'package:ronaresto/services/database.dart' as db;
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -68,11 +68,12 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
               controller: tecEmail,
               validator: (value){
+                db.findByMail(tecEmail.text);
                 if (value.isEmpty) {
                   return "Fout";
                 }
-                else if (findByMail(tecEmail.text) != null){
-                  return "Email is reed geregistreerd";
+                if(db.isMailFound){
+                  return "Mail is reeds geregistreerd";
                 }
                 return null;
               },
@@ -122,10 +123,8 @@ class _RegisterFormState extends State<RegisterForm> {
             ElevatedButton(
               onPressed: () {
                 if (_fk.currentState.validate() && tecPass.text == tecConPass.text) {
-                  register(tecName.text, tecEmail.text, tecPass.text, tecPhone.text);
+                  db.register(tecName.text, tecEmail.text, tecPass.text, tecPhone.text);
                   Navigator.pop(context);
-                }
-                else {
                 }
               },
               child: Text('Registreren'),

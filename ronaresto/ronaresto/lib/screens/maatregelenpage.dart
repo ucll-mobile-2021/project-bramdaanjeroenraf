@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ronaresto/screens/homepage.dart';
 import 'package:ronaresto/services/htmlloader.dart';
 
 class MaatregelenPage extends StatelessWidget {
