@@ -75,6 +75,7 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 60),
           ElevatedButton(
               onPressed: () {
+                login(tecEmail.text, tecPassword.text);
                   if(userId != null){ // if bool is true, then go to next page.
                     Navigator.push(
                       context,
@@ -84,7 +85,6 @@ class _LoginFormState extends State<LoginForm> {
                     // if login failed (incorrect credentials...)
                     print('FOUTE LOGIN');
                   }
-                  //login(tecEmail.text, tecPassword.text);
               },
               child: Text('Inloggen'),
           ),
