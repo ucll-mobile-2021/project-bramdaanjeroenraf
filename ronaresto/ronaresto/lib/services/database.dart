@@ -8,7 +8,7 @@ var settings = new ConnectionSettings(
     password: 'Rf1I4vFY8P',
     db: 'ZdZsbXqf4M');
 
-int userId;
+int userId = null;
 bool isMailFound =  false;
 
 void login(String email, String password)  async {
