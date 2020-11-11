@@ -1,0 +1,13 @@
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+.idea/*
+ronaresto/.idea/
+ronaresto/.idea/*
+ronaresto/.idea/libraries/Dart_Packages.xml
+ronaresto/.idea/misc.xml
+ronaresto/.idea/ronaresto.iml
+ronaresto/.idea/workspace.xml

@@ -11,7 +11,7 @@ var settings = new ConnectionSettings(
 int userId;
 bool isMailFound =  false;
 
-void login(String email, String password)  async {
+Future<bool> login(String email, String password)  async {
   var conn = await MySqlConnection.connect(settings);
   String passwordHash = Password.hash(password, PBKDF2());
   Results results =  await conn.query('SELECT * FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
@@ -19,9 +19,17 @@ void login(String email, String password)  async {
     for (var row in results) {
       userId = row[0];
     }
+<<<<<<< HEAD
     print(userId);
+=======
+    print(user_id);
+    conn.close();
+    return true;
+  }else{
+    conn.close();
+    return false;
+>>>>>>> 82a7989ec88bb3c8bf6f0f0873aeec06427f4df1
   }
-  conn.close();
 }
 
 void register(String name, String email, String password, String phone) async {
@@ -36,4 +44,25 @@ void findByMail(String email) async {
   Results results =  await conn.query('SELECT COUNT(user_id) FROM User WHERE email = ?', [email]);
   conn.close();
   isMailFound = results.fields.first != 0;
+}
+
+
+
+
+Future<List<dynamic>> findRestaurant(String name)  async {
+  var conn = await MySqlConnection.connect(settings);
+  var results =  await conn.query('SELECT `restaurant_id`, `name`, `location` FROM `Restaurant` WHERE name = ?', [name]);
+
+  var info = new List(3);
+
+  if (results.length > 0) {
+    for (var row in results) {
+      info[0] = row[0].toString();
+      info[1] = row[1].toString();
+      info[2] = row[2].toString();
+    }
+    print('resto ID'+info[0].toString());
+  }
+  conn.close();
+  return info;
 }

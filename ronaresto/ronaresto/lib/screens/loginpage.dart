@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ronaresto/services/database.dart';
+import 'package:ronaresto/screens/qrpage.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key key}) : super(key: key);
@@ -74,7 +75,19 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 60),
           ElevatedButton(
               onPressed: () {
-                  login(tecEmail.text, tecPassword.text);
+                final isCorrectLogin = login(tecEmail.text, tecPassword.text);
+                isCorrectLogin.then((resp) {
+                  if(resp){ // if bool is true, then go to next page.
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (contex) => QrPage()),
+                    );
+                  }else{
+                    // if login failed (incorrect credentials...)
+                    print('FOUTE LOGIN');
+                  }
+                });
+                  //login(tecEmail.text, tecPassword.text);
               },
               child: Text('Inloggen'),
           ),
