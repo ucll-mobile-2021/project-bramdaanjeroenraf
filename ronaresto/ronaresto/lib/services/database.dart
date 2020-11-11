@@ -11,7 +11,7 @@ var settings = new ConnectionSettings(
 int userId;
 bool isMailFound =  false;
 
-Future<bool> login(String email, String password)  async {
+void login(String email, String password)  async {
   var conn = await MySqlConnection.connect(settings);
   String passwordHash = Password.hash(password, PBKDF2());
   Results results =  await conn.query('SELECT * FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
@@ -19,16 +19,6 @@ Future<bool> login(String email, String password)  async {
     for (var row in results) {
       userId = row[0];
     }
-<<<<<<< HEAD
-    print(userId);
-=======
-    print(user_id);
-    conn.close();
-    return true;
-  }else{
-    conn.close();
-    return false;
->>>>>>> 82a7989ec88bb3c8bf6f0f0873aeec06427f4df1
   }
 }
 
