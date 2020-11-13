@@ -75,16 +75,8 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 60),
           ElevatedButton(
               onPressed: () {
-                login(tecEmail.text, tecPassword.text);
-                  if(userId != null){ // if bool is true, then go to next page.
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (contex) => QrPage()),
-                    );
-                  }else{
-                    // if login failed (incorrect credentials...)
-                    print('FOUTE LOGIN');
-                  }
+                login(tecEmail.text, tecPassword.text).then((value) =>
+                swapPage(value));
               },
               child: Text('Inloggen'),
           ),
@@ -93,6 +85,16 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
+  void swapPage(bool found) {
+    if (found) {
+      Navigator.push(context,
+        MaterialPageRoute(builder: (contex) => QrPage()),
+      );
+    }
+    else {
+      print('FOUTE LOGIN');
+    }
+  }
 }
 
 
