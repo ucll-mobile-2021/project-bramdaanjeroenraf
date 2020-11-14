@@ -48,10 +48,18 @@ class QrResPage extends StatelessWidget {
                 var info = reviews(restaurant_id);
                 info.then((resp) {
                   // info
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (contex) => ReviewPage(text: resp[0], stars: resp[1], user: resp[2], restaurant_id: restaurant_id)),
-                  ); // , ipv ;
+                  if(resp==null){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: [], restaurant_id: restaurant_id)),
+                    );
+                  }
+                  else{
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id)),
+                    ); // , ipv ;
+                  }
                 });
               },
               child: Text('Reviews'),
