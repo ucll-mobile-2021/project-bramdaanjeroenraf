@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:ronaresto/services/database.dart';
+import 'package:ronaresto/screens/reviewpage.dart';
 
 class QrResPage extends StatelessWidget {
 
@@ -41,6 +42,28 @@ class QrResPage extends StatelessWidget {
             Text(restaurant_location, style: TextStyle(fontSize: 12)),
             Text('ID: '+restaurant_id, style: TextStyle(fontSize: 20)),
             Text('tafel nr: '+restaurant_tafel.toString(), style: TextStyle(fontSize: 20)),
+
+            ElevatedButton(
+              onPressed: () {
+                var info = reviews(restaurant_id);
+                info.then((resp) {
+                  // info
+                  if(resp==null){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: [], restaurant_id: restaurant_id)),
+                    );
+                  }
+                  else{
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id)),
+                    ); // , ipv ;
+                  }
+                });
+              },
+              child: Text('Reviews'),
+            ),
           ],
         ),
       ),

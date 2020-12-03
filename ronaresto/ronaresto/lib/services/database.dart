@@ -38,9 +38,6 @@ void findByMail(String email) async {
   isMailFound = results.fields.first != 0;
 }
 
-
-
-
 Future<List<dynamic>> findRestaurant(String name)  async {
   var conn = await MySqlConnection.connect(settings);
   var results =  await conn.query('SELECT `restaurant_id`, `name`, `location` FROM `Restaurant` WHERE name = ?', [name]);
@@ -57,4 +54,43 @@ Future<List<dynamic>> findRestaurant(String name)  async {
   }
   conn.close();
   return info;
+}
+
+void placeReview(String text, int stars, String user_id, String restaurant_id) async {
+  var conn = await MySqlConnection.connect(settings);
+  await conn.query('INSERT INTO Review (text, stars, user_id, restaurant_id) VALUES (?, ?, ?, ?)', [text, stars, user_id, restaurant_id]);
+  conn.close();
+}
+
+Future<List<dynamic>> reviews(String restaurant_id)  async {
+  var conn = await MySqlConnection.connect(settings);
+  var results =  await conn.query('SELECT `text`, `stars`, `user_id` FROM `Review` WHERE restaurant_id = ? ORDER BY `review_id` DESC LIMIT 3', [restaurant_id]);
+
+  if (results.length > 0){
+    var reviews = new List(results.length);
+    int i = 0;
+
+    if (results.length > 0) {
+      for (var row in results) {
+        reviews[i] = new List(3);
+        reviews[i][0] = row[0].toString();
+        reviews[i][1] = row[1].toString();
+        var users =  await conn.query('SELECT `name` FROM `User` WHERE user_id = ?', [row[2].toString()]);
+        if (users.length > 0) {
+          for (var row in users) {
+            reviews[i][2] = row[0].toString();
+          }
+        }else{
+          reviews[i][2] = 'unavailable';
+        }
+        i++;
+      }
+    }
+    conn.close();
+    return reviews;
+  }
+  else{
+    conn.close();
+    return null;
+  }
 }
