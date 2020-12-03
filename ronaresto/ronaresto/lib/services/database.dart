@@ -9,7 +9,7 @@ var settings = new ConnectionSettings(
     db: 'ZdZsbXqf4M');
 
 int userId;
-bool isMailFound =  false;
+bool isMailFound = false;
 
 Future<bool> login(String email, String password)  async {
   var conn = await MySqlConnection.connect(settings);
