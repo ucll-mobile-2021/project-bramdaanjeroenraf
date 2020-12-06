@@ -5,23 +5,26 @@ import 'package:ronaresto/services/database.dart';
 
 class ReviewPlacingPage extends StatefulWidget {
 
-  String restaurant_id;
+  final String restaurant_id;
+  final String user_id;
 
-  ReviewPlacingPage({Key key, @required String this.restaurant_id}) : super(key: key);
+  ReviewPlacingPage({Key key, @required String this.restaurant_id, String this.user_id}) : super(key: key);
 
   @override
-  _ReviewPlacingPageState createState() => _ReviewPlacingPageState(restaurant_id);
+  _ReviewPlacingPageState createState() => _ReviewPlacingPageState(restaurant_id, user_id);
 }
 
 class _ReviewPlacingPageState extends State {
 
   String restaurant_id;
+  String user_id;
 
   final _review = Review();
   final _formKey = GlobalKey<FormState>();
 
-  _ReviewPlacingPageState(String restaurant_id){
+  _ReviewPlacingPageState(String restaurant_id, String user_id){
     this.restaurant_id = restaurant_id;
+    this.user_id = user_id;
   }
 
   @override
@@ -69,23 +72,13 @@ class _ReviewPlacingPageState extends State {
                               final form = _formKey.currentState;
                               if(form.validate()){
                                 form.save();
-                                placeReview(_review.text, _review.stars, '2', restaurant_id);
-
-                                var info = reviews(restaurant_id);
+                                var info = placeReview(_review.text, _review.stars, user_id, restaurant_id);
                                 info.then((resp) {
                                   // info
-                                  if(resp==null){
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: [], restaurant_id: restaurant_id)),
-                                    );
-                                  }
-                                  else{
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id)),
+                                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id, user_id: user_id)),
                                     ); // , ipv ;
-                                  }
                                 });
                               }
                             },

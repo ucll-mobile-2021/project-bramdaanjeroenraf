@@ -6,8 +6,9 @@ class ReviewPage extends StatelessWidget {
 
   final List<dynamic> reviews;
   final String restaurant_id;
+  final String user_id;
 
-  ReviewPage({Key key, @required List<dynamic> this.reviews, String this.restaurant_id}) : super(key: key);
+  ReviewPage({Key key, @required List<dynamic> this.reviews, String this.restaurant_id, String this.user_id}) : super(key: key);
 
   Widget getList(){
     Widget child;
@@ -45,7 +46,7 @@ class ReviewPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (contex) => ReviewPlacingPage(restaurant_id: restaurant_id)),
+                  MaterialPageRoute(builder: (contex) => ReviewPlacingPage(restaurant_id: restaurant_id, user_id: user_id)),
                 ); // , ipv ;
               },
               child: Text('add review'),

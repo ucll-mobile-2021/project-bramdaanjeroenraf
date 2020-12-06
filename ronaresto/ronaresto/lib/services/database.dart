@@ -11,7 +11,7 @@ var settings = new ConnectionSettings(
 int userId;
 bool isMailFound =  false;
 
-Future<bool> login(String email, String password)  async {
+/*Future<bool> login(String email, String password)  async {
   var conn = await MySqlConnection.connect(settings);
   String passwordHash = Password.hash(password, PBKDF2());
   Results results =  await conn.query('SELECT * FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
@@ -22,6 +22,22 @@ Future<bool> login(String email, String password)  async {
     return true;
   }
   return false;
+}*/
+
+Future<String> login(String email, String password)  async {
+  var conn = await MySqlConnection.connect(settings);
+  String passwordHash = Password.hash(password, PBKDF2());
+  Results results =  await conn.query('SELECT user_id FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
+  conn.close();
+  String id;
+
+  if (results.length > 0) {
+    for (var row in results) {
+      id = row[0].toString();
+    }
+  }
+  conn.close();
+  return id;
 }
 
 void register(String name, String email, String password, String phone) async {
@@ -56,10 +72,12 @@ Future<List<dynamic>> findRestaurant(String name)  async {
   return info;
 }
 
-void placeReview(String text, int stars, String user_id, String restaurant_id) async {
+Future<List<dynamic>> placeReview(String text, int stars, String user_id, String restaurant_id) async {
   var conn = await MySqlConnection.connect(settings);
   await conn.query('INSERT INTO Review (text, stars, user_id, restaurant_id) VALUES (?, ?, ?, ?)', [text, stars, user_id, restaurant_id]);
   conn.close();
+
+  return reviews(restaurant_id);
 }
 
 Future<List<dynamic>> reviews(String restaurant_id)  async {

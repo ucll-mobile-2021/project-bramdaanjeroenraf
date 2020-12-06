@@ -5,7 +5,9 @@ import 'package:ronaresto/screens/qrrespage.dart';
 import 'package:ronaresto/services/database.dart';
 
 class QrPage extends StatelessWidget {
-  QrPage({Key key}) : super(key: key);
+  final String user_id;
+
+  QrPage({Key key, @required String this.user_id}) : super(key: key);
 
   Future<String> _scanQr() async{
     print('scanner actief 3');
@@ -73,7 +75,7 @@ class QrPage extends StatelessWidget {
                       // info
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (contex) => QrResPage(restaurant_name: name, restaurant_tafel: tafel, restaurant_id: resp2[0], restaurant_location: resp2[2])),
+                        MaterialPageRoute(builder: (contex) => QrResPage(user_id: user_id, restaurant_name: name, restaurant_tafel: tafel, restaurant_id: resp2[0], restaurant_location: resp2[2])),
                       ); // , ipv ;
 
                     });
