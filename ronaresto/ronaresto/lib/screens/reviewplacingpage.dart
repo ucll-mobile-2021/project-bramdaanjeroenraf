@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ronaresto/models/review.dart';
+import 'package:ronaresto/screens/reviewpage.dart';
 import 'package:ronaresto/services/database.dart';
 
 class ReviewPlacingPage extends StatefulWidget {
@@ -55,6 +56,9 @@ class _ReviewPlacingPageState extends State {
                                 if (value.isEmpty) {
                                   return 'Please enter the number of stars.';
                                 }
+                                if (int.tryParse(value) > 5 || int.tryParse(value) < 0 ){
+                                  return 'Please enter a number between 0 and 5.';
+                                }
                               },
                               onSaved: (val) =>
                                   setState(() => _review.stars = int.tryParse(val)),
@@ -66,6 +70,23 @@ class _ReviewPlacingPageState extends State {
                               if(form.validate()){
                                 form.save();
                                 placeReview(_review.text, _review.stars, '2', restaurant_id);
+
+                                var info = reviews(restaurant_id);
+                                info.then((resp) {
+                                  // info
+                                  if(resp==null){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: [], restaurant_id: restaurant_id)),
+                                    );
+                                  }
+                                  else{
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id)),
+                                    ); // , ipv ;
+                                  }
+                                });
                               }
                             },
                             child: Text('Place review'),

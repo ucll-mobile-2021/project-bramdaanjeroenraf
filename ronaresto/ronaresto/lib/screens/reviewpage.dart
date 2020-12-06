@@ -9,35 +9,37 @@ class ReviewPage extends StatelessWidget {
 
   ReviewPage({Key key, @required List<dynamic> this.reviews, String this.restaurant_id}) : super(key: key);
 
+  Widget getList(){
+    Widget child;
+    if(reviews.length == 0){
+      child = Text("no reviews", style: TextStyle(fontSize: 30));
+    }else{
+      child = ListView.builder(
+          itemCount: reviews.length,
+          itemBuilder: (BuildContext context, int index){
+            return Column(
+                children: <Widget>[
+                  Text(reviews[index][2]+" : "+reviews[index][1]+" stars" , style: TextStyle(fontSize: 20)),
+                  Text(reviews[index][0], style: TextStyle(fontSize: 12)),
+                ]
+            );
+          }
+      );
+    }
+    return child;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body : Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-
-            Text(reviews[0][2]+" : "+reviews[0][1]+" stars" , style: TextStyle(fontSize: 20)),
-            Text(reviews[0][0], style: TextStyle(fontSize: 14)),
-            const SizedBox(height: 30),
-            Text(reviews[1][2]+" : "+reviews[1][1]+" stars" , style: TextStyle(fontSize: 20)),
-            Text(reviews[1][0], style: TextStyle(fontSize: 14)),
-            const SizedBox(height: 30),
-            Text(reviews[2][2]+" : "+reviews[2][1]+" stars" , style: TextStyle(fontSize: 20)),
-            Text(reviews[2][0], style: TextStyle(fontSize: 14)),
-            const SizedBox(height: 30),
-
-            /*ListView.builder(
-              itemCount: reviews.length,
-              itemBuilder: (BuildContext context, int index){
-                return Column(
-                  children: <Widget>[
-                    Text(reviews[index][2]+" : "+reviews[index][1]+" stars" , style: TextStyle(fontSize: 20)),
-                    Text(reviews[index][0], style: TextStyle(fontSize: 12)),
-                  ]
-                );
-              }
-            ),*/
+          children: <Widget>[
+            Container(
+              height: 200.0,
+              child: getList()
+            ),
 
             ElevatedButton(
               onPressed: () {
@@ -46,7 +48,7 @@ class ReviewPage extends StatelessWidget {
                   MaterialPageRoute(builder: (contex) => ReviewPlacingPage(restaurant_id: restaurant_id)),
                 ); // , ipv ;
               },
-              child: Text('Reviews'),
+              child: Text('add review'),
             ),
 
           ],
