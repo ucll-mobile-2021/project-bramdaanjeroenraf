@@ -4,12 +4,13 @@ import 'package:ronaresto/screens/reviewpage.dart';
 
 class QrResPage extends StatelessWidget {
 
+  final String user_id;
   final String restaurant_name;
   final int restaurant_tafel;
   final String restaurant_id;
   final String restaurant_location;
 
-  QrResPage({Key key, @required String this.restaurant_name, int this.restaurant_tafel, String this.restaurant_id, String this.restaurant_location}) : super(key: key);
+  QrResPage({Key key, @required String this.user_id,String this.restaurant_name, int this.restaurant_tafel, String this.restaurant_id, String this.restaurant_location}) : super(key: key);
 
 
   @override
@@ -51,13 +52,13 @@ class QrResPage extends StatelessWidget {
                   if(resp==null){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: [], restaurant_id: restaurant_id)),
+                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: [], restaurant_id: restaurant_id, user_id: user_id,)),
                     );
                   }
                   else{
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id)),
+                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id, user_id: user_id,)),
                     ); // , ipv ;
                   }
                 });
