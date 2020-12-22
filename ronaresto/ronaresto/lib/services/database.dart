@@ -1,5 +1,7 @@
 import 'package:mysql1/mysql1.dart';
 import 'package:password/password.dart';
+import 'package:intl/intl.dart';
+import 'package:ronaresto/models/user.dart';
 
 var settings = new ConnectionSettings(
     host: 'remotemysql.com',
@@ -8,20 +10,31 @@ var settings = new ConnectionSettings(
     password: 'Rf1I4vFY8P',
     db: 'ZdZsbXqf4M');
 
-int userId;
+User user;
 bool isMailFound = false;
 
 Future<bool> login(String email, String password)  async {
   var conn = await MySqlConnection.connect(settings);
   String passwordHash = Password.hash(password, PBKDF2());
-  Results results =  await conn.query('SELECT * FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
+  Results results =  await conn.query('SELECT user_id, email, telephonenumber, name FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
   if (results.length == 1) {
     for (var row in results) {
-      userId = row[0];
+      int id = row[0];
+      String email = row[1].toString();
+      String telephone = row[2].toString();
+      String name = row[3].toString();
+      user = new User(id, email, telephone, name);
+      user.type = "User";
     }
     return true;
   }
   return false;
+}
+
+void loginGuest(String email, String telephone, String name){
+  int id = 0;
+  user = new User(id, email, telephone, name);
+  user.type = "Guest";
 }
 
 void register(String name, String email, String password, String phone) async {
@@ -93,4 +106,24 @@ Future<List<dynamic>> reviews(String restaurant_id)  async {
     conn.close();
     return null;
   }
+}
+
+void createVisit(int restaurantId) async{
+  String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  DateTime time = DateTime.now();
+  if (time.minute >= 30) {
+    time = time.subtract(Duration(minutes: (time.minute - 30), seconds: time.second));
+  }
+  else {
+    time = time.subtract(Duration(minutes: time.minute, seconds: time.second));
+  }
+  String timeslot = DateFormat('HH:mm:ss').format(time);
+  print(timeslot);
+  var conn = await MySqlConnection.connect(settings);
+  await conn.query('INSERT INTO Visit (date, timeslot, name, telephone, email, restaurant_id) VALUES (?, ?, ?, ?, ?, ?)', [date, timeslot, user.name, user.telephone, user.email, restaurantId]);
+  conn.close();
+}
+
+void createVisitGuest(){
+
 }

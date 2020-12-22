@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:ronaresto/screens/qrrespage.dart';
+import 'package:ronaresto/screens/visitformpage.dart';
 import 'package:ronaresto/services/database.dart';
 
 class QrPage extends StatelessWidget {
@@ -50,19 +51,9 @@ class QrPage extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: RaisedButton(
                 onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Hoofdmenu', style: TextStyle(fontSize: 20)),
-              ),
-            ),
-            ButtonTheme(
-              minWidth: 200.0,
-              padding: const EdgeInsets.all(10.0),
-              child: RaisedButton(
-                onPressed: () {
                   final scanResult = _scanQr();
                   scanResult.then((resp) {
-
+                    print(resp);
                     String name = resp.split(";").first;
                     int tafel = 0;
                     if( resp.split(";").length == 2){
@@ -70,10 +61,15 @@ class QrPage extends StatelessWidget {
                     }
                     var info = findRestaurant(name);
                     info.then((resp2) {
-                      // info
+                    // info
+                      createVisit(int.parse(resp2[0]));
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (contex) => QrResPage(restaurant_name: name, restaurant_tafel: tafel, restaurant_id: resp2[0], restaurant_location: resp2[2])),
+                        MaterialPageRoute(builder: (contex) =>
+                            QrResPage(restaurant_name: name,
+                                restaurant_tafel: tafel,
+                                restaurant_id: resp2[0],
+                                restaurant_location: resp2[2])),
                       ); // , ipv ;
 
                     });
@@ -81,6 +77,17 @@ class QrPage extends StatelessWidget {
                 },
 
                 child: Text('Scan QR code', style: TextStyle(fontSize: 20)),
+              ),
+            ),
+            const SizedBox(height: 30),
+            ButtonTheme(
+              minWidth: 200.0,
+              padding: const EdgeInsets.all(10.0),
+              child: RaisedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Hoofdmenu', style: TextStyle(fontSize: 20)),
               ),
             ),
           ],

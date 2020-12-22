@@ -1,4 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:ronaresto/screens/qrpage.dart';
+import 'package:ronaresto/screens/visitformpage.dart';
+import 'package:ronaresto/services/database.dart';
 import 'maatregelenpage.dart';
 import 'loginpage.dart';
 import 'registerpage.dart';
@@ -53,6 +57,20 @@ class HomePage extends StatelessWidget {
                 },
                 child: const Text('Registreren', style: TextStyle(fontSize: 20)),
               ),
+            ),
+            const SizedBox(height: 30),
+            RichText(
+                text: new TextSpan(
+                  text: 'Inloggen als gast',
+                  style: new TextStyle(color: Colors.blue),
+                  recognizer: new TapGestureRecognizer()
+                    ..onTap = () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => VisitFormPage()),
+                    );
+                  },
+                ),
             ),
           ],
         ),

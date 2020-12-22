@@ -27,6 +27,7 @@ dependencies:
   password: 1.0.0
   html: 0.14.0+4
   http: 0.12.2
+  intl: ^0.16.1
 
 
 
