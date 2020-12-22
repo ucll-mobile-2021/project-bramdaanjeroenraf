@@ -47,47 +47,70 @@ class _LoginFormState extends State<LoginForm> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Email',
-            ),
-            controller: tecEmail,
+            decoration:
+            InputDecoration(labelText: 'Email'),
             validator: (value){
               if (value.isEmpty) {
-                return "Fout";
+                return "mag niet leeg zijn";
               }
-              return null;
+              else return _emailValidator(value);
             },
+            onSaved: (val) =>
+                setState(() => tecEmail.text = val)
           ),
           const SizedBox(height: 30),
           TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Wachtwoord',
-            ),
+            decoration:
+            InputDecoration(labelText: 'Wachtwoord'),
             obscureText: true,
-            controller: tecPassword,
             validator: (value){
               if (value.isEmpty) {
-                return "Fout";
-              }
-              return null;
+                return "mag niet leeg zijn";
+              }else return null;
             },
+            onSaved: (val) =>
+                setState(() => tecPassword.text = val)
           ),
           const SizedBox(height: 60),
           ElevatedButton(
               onPressed: () {
-                var info = login(tecEmail.text, tecPassword.text);
-                info.then((resp) {
-                  // info
-                  if(resp==null){
-                    print('FOUTE LOGIN');
-                  }
-                  else{
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (contex) => QrPage(user_id: resp)),
-                    ); // , ipv ;
-                  }
-                });
+                final form = _fk.currentState;
+                if(form.validate()) {
+                  form.save();
+                  var info = login(tecEmail.text, tecPassword.text);
+                  info.then((resp) {
+                    // info
+                    if(resp==null){
+                      print('FOUTE LOGIN');
+                      /*final error = SnackBar(
+                        content: Text('incorrect '),
+                      );
+                      Scaffold.of(context).showSnackBar(error);*/
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Incorrect login"),
+                            actions: <Widget> [
+                              FlatButton(
+                                child: Text('ok'),
+                                onPressed: (){
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                    else{
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (contex) => QrPage(user_id: resp)),
+                      ); // , ipv ;
+                    }
+                  });
+                }
               },
               child: Text('Inloggen'),
           ),
@@ -96,16 +119,14 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  /*void swapPage(bool found) {
-    if (found) {
-      Navigator.push(context,
-        MaterialPageRoute(builder: (contex) => QrPage()),
-      );
+  String _emailValidator(String value){
+    String pattern = r'^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]+$';
+    RegExp regExp = new RegExp(pattern);
+    if (!regExp.hasMatch(value)) {
+      return 'geen geldige mail';
     }
-    else {
-      print('FOUTE LOGIN');
-    }
-  }*/
+    return null;
+  }
 }
 
 
