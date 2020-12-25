@@ -42,12 +42,15 @@ class ReviewPage extends StatelessWidget {
               child: getList()
             ),
 
+            if(user_id!=null)
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (contex) => ReviewPlacingPage(restaurant_id: restaurant_id, user_id: user_id)),
-                ); // , ipv ;
+                if(user_id!=null){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (contex) => ReviewPlacingPage(restaurant_id: restaurant_id, user_id: user_id)),
+                  ); // , ipv ;
+                }
               },
               child: Text('add review'),
             ),

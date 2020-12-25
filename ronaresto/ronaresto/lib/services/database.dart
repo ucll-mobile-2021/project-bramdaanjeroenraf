@@ -145,3 +145,41 @@ void createVisit(int restaurantId) async{
 void createVisitGuest(){
 
 }
+
+
+
+Future<List<dynamic>> dishes(String restaurant_id)  async {
+  var conn = await MySqlConnection.connect(settings);
+  var results =  await conn.query('SELECT `dish_id`,`name`, `price`, `description` FROM `Dish` WHERE restaurant_id = ? ORDER BY 1 ASC', [restaurant_id]);
+
+  if (results.length > 0){
+    var dishes = new List(results.length);
+    int i = 0;
+
+    for (var row in results) {
+      dishes[i] = new List(5);
+      dishes[i][0] = row[0].toString();
+      dishes[i][1] = row[1].toString();
+      dishes[i][2] = row[2].toString();
+      dishes[i][3] = row[3].toString();
+      var allergylist =  await conn.query('SELECT a.name, a.description FROM `Allergylist` as l inner join `Allergy` as a using(allergy_id) WHERE dish_id = ?', [row[0].toString()]);
+      if (allergylist.length > 0) {
+        dishes[i][4] = new List(allergylist.length);
+        int j = 0;
+        for (var alg in allergylist) {
+          dishes[i][4][j] = [ alg[0].toString(), alg[1].toString() ];
+          j++;
+        }
+      }else{
+        dishes[i][4] = [];
+      }
+      i++;
+    }
+    conn.close();
+    return dishes;
+  }
+  else{
+    conn.close();
+    return null;
+  }
+}

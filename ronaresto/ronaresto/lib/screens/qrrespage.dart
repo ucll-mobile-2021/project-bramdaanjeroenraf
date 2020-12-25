@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ronaresto/services/database.dart';
 import 'package:ronaresto/screens/reviewpage.dart';
+import 'package:ronaresto/screens/menupage.dart';
 
 class QrResPage extends StatelessWidget {
 
@@ -64,6 +65,27 @@ class QrResPage extends StatelessWidget {
                 });
               },
               child: Text('Reviews'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                var info = dishes(restaurant_id);
+                info.then((resp) {
+                  // info
+                  if(resp==null){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (contex) => MenuPage(dishes: [], restaurant_id: restaurant_id, user_id: user_id,)),
+                    );
+                  }
+                  else{
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (contex) => MenuPage(dishes: resp, restaurant_id: restaurant_id, user_id: user_id,)),
+                    ); // , ipv ;
+                  }
+                });
+              },
+              child: Text('Menu'),
             ),
           ],
         ),

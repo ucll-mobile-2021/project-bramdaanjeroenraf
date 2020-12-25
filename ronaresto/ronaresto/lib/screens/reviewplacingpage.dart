@@ -47,6 +47,7 @@ class _ReviewPlacingPageState extends State {
                               if (value.isEmpty) {
                                 return 'Please enter a comment';
                               }
+                              else return null;
                             },
                             onSaved: (val) =>
                                 setState(() => _review.text = val),
@@ -62,6 +63,7 @@ class _ReviewPlacingPageState extends State {
                                 if (int.tryParse(value) > 5 || int.tryParse(value) < 0 ){
                                   return 'Please enter a number between 0 and 5.';
                                 }
+                                else return null;
                               },
                               onSaved: (val) =>
                                   setState(() => _review.stars = int.tryParse(val)),

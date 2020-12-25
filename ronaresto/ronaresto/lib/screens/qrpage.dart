@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:ronaresto/screens/qrrespage.dart';
+import 'package:ronaresto/screens/searchrestaurantpage.dart';
 import 'package:ronaresto/screens/visitformpage.dart';
 import 'package:ronaresto/services/database.dart';
 
@@ -75,6 +76,20 @@ class QrPage extends StatelessWidget {
                 },
 
                 child: Text('Scan QR code', style: TextStyle(fontSize: 20)),
+              ),
+            ),
+            const SizedBox(height: 30),
+            ButtonTheme(
+              minWidth: 200.0,
+              padding: const EdgeInsets.all(10.0),
+              child: RaisedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (contex) => SearchRestaurantPage(user_id: user_id)),
+                  ); // , ipv ;
+                },
+                child: Text('Search restaurant', style: TextStyle(fontSize: 20)),
               ),
             ),
             const SizedBox(height: 30),
