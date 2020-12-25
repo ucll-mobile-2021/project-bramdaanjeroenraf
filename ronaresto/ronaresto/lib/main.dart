@@ -3,7 +3,12 @@ import 'screens/homepage.dart';
 import 'package:ronaresto/services/htmlloader.dart';
 
 void main() {
-  loadMeasures();
+  Future<bool> isMeasureLoaded = loadMeasures();
+  isMeasureLoaded.then((resp) {
+    if (!resp) {
+      measuresNotLoaded();
+    }
+  });
   runApp(MyApp());
 }
 

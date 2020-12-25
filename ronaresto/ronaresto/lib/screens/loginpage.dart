@@ -75,7 +75,7 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 60),
           ElevatedButton(
               onPressed: () {
-                var info = login(tecEmail.text, tecPassword.text);
+                Future<String> info = login(tecEmail.text, tecPassword.text);
                 info.then((resp) {
                   // info
                   if(resp==null){

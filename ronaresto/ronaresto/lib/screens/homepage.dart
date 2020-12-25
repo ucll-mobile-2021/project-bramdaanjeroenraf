@@ -1,11 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:ronaresto/screens/qrpage.dart';
-import 'package:ronaresto/screens/visitformpage.dart';
-import 'package:ronaresto/services/database.dart';
+import 'package:ronaresto/services/htmlloader.dart';
 import 'maatregelenpage.dart';
 import 'loginpage.dart';
 import 'registerpage.dart';
+import 'visitformpage.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key key}) : super(key: key);

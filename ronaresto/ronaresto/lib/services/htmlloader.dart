@@ -3,7 +3,8 @@ import 'package:html/parser.dart';
 
 String _measures = '';
 
-void loadMeasures() async {
+Future<bool> loadMeasures() async {
+  _measures = '';
   var url = 'https://www.info-coronavirus.be/nl/faq/#id_3';
 
   final response = await http.Client().get(Uri.parse(url));
@@ -17,10 +18,15 @@ void loadMeasures() async {
       parsed = parsed.replaceAll('Ã©', r'é');
       if(!parsed.contains('Lees hier')) _measures += parsed + '\n\n';
     }
+    return true;
   }
+  else return false;
 }
 
 String getMeasures() {
-  loadMeasures();
   return _measures;
+}
+
+String measuresNotLoaded() {
+  _measures = 'De maatregelen zijn tijdelijk niet beschikbaar.\n\nProbeer later nog eens!';
 }
