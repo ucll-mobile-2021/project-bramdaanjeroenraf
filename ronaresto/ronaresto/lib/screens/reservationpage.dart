@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:ronaresto/models/reservation.dart';
 import 'package:ronaresto/services/database.dart';
 import 'package:intl/intl.dart';
@@ -30,6 +31,7 @@ class _ReservationPageState extends State {
   _ReservationPageState(String restaurant_id, String user_id){
     this.restaurant_id = restaurant_id;
     this.user_id = user_id;
+    _reservation.timeslot = "wrong";
   }
 
   @override
@@ -46,48 +48,47 @@ class _ReservationPageState extends State {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           if(selectedDate != null)
-                          Text(DateFormat('yyyy-MM-dd').format(selectedDate)),
+                            Text("gekozen datum: " + DateFormat('yyyy-MM-dd').format(selectedDate)),
                           ElevatedButton(
                             onPressed: () => _selectDate(context),
-                            child: Text("choose date"),
+                            child: Text("kies een datum"),
                           ),
-                          TextFormField(
-                            decoration:
-                            InputDecoration(labelText: 'number of people'),
-                            keyboardType: TextInputType.number,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter the number of people.';
-                              }
-                              if (int.tryParse(value) > 10 || int.tryParse(value) < 0 ){
-                                return 'Please enter a number between 0 and 10.';
-                              }
-                              else return null;
-                            },
-                            onSaved: (val) =>
-                                setState(() => _reservation.number= int.tryParse(val)),
-                          ),
-                          ElevatedButton(
-                            onPressed: () async {
-                              final form = _formKey.currentState;
-                              if(form.validate()){
-                                form.save();
-                                timeslots = await _getAvailableHours();
-                              }
-                            },
-                            child: Text("test"),
-                          ),
-                          /*ElevatedButton(
-                            onPressed: (){
-                              print(hours);
-                              timeslots = _getTimeslots();
-                            },
-                            child: Text("choose a time")
-                          ),*/
-                          Container(
-                              height: 200.0,
+                          if(selectedDate != null)
+                            TextFormField(
+                              decoration:
+                              InputDecoration(labelText: 'number of people'),
+                              keyboardType: TextInputType.number,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Please enter the number of people.';
+                                }
+                                if (int.tryParse(value) > 10 || int.tryParse(value) < 0 ){
+                                  return 'Please enter a number between 0 and 10.';
+                                }
+                                else return null;
+                              },
+                              onSaved: (val) =>
+                                  setState(() => _reservation.number= int.tryParse(val)),
+                            ),
+                          if(selectedDate != null)
+                            ElevatedButton(
+                              onPressed: () async {
+                                final form = _formKey.currentState;
+                                if(form.validate()){
+                                  form.save();
+                                  timeslots = await _getAvailableHours();
+                                }
+                              },
+                              child: Text("bevestig het aantal"),
+                            ),
+                          if(_reservation.number != null)
+                            Container(
+                              height: 50.0,
                               child: timeslots,
-                          ),
+                            ),
+                          if(_reservation.timeslot != null)
+                            Text(_reservation.timeslot)
+
                           /*ElevatedButton(
                             onPressed: () {
                               final form = _formKey.currentState;
@@ -159,7 +160,19 @@ class _ReservationPageState extends State {
               children: <Widget>[
                 Container(
                   width: 100.0,
-                  child: Text(times[index] , style: TextStyle(fontSize: 20)),
+                  child:
+                  RichText(
+                    text: new TextSpan(
+                      text: times[index],
+                      style: new TextStyle(color: Colors.blue, fontSize: 30),
+                      recognizer: new TapGestureRecognizer()
+                        ..onTap = () async {
+                          setState(() {
+                            _reservation.timeslot = times[index];
+                          });
+                        },
+                    ),
+                  ),
                 )
               ]
           );
