@@ -54,13 +54,13 @@ class QrResPage extends StatelessWidget {
                   if(resp==null){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: [], restaurant_id: restaurant_id, user_id: user_id,)),
+                      MaterialPageRoute(builder: (context) => ReviewPage(reviews: [], restaurant_id: restaurant_id, user_id: user_id,)),
                     );
                   }
                   else{
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id, user_id: user_id,)),
+                      MaterialPageRoute(builder: (context) => ReviewPage(reviews: resp, restaurant_id: restaurant_id, user_id: user_id,)),
                     ); // , ipv ;
                   }
                 });
@@ -75,13 +75,13 @@ class QrResPage extends StatelessWidget {
                   if(resp==null){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (contex) => MenuPage(dishes: [], restaurant_id: restaurant_id, user_id: user_id,)),
+                      MaterialPageRoute(builder: (context) => MenuPage(dishes: [], restaurant_id: restaurant_id, restaurant_tafel: restaurant_tafel, user_id: user_id,)),
                     );
                   }
                   else{
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (contex) => MenuPage(dishes: resp, restaurant_id: restaurant_id, user_id: user_id,)),
+                      MaterialPageRoute(builder: (context) => MenuPage(dishes: resp, restaurant_id: restaurant_id, restaurant_tafel: restaurant_tafel, user_id: user_id,)),
                     ); // , ipv ;
                   }
                 });
@@ -99,6 +99,12 @@ class QrResPage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          createAlert(int.parse(restaurant_id), restaurant_tafel);
+          },
+        child: Icon(Icons.hail),
       ),
     );
   }

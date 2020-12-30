@@ -18,17 +18,21 @@ Future<String> login(String email, String password)  async {
   String passwordHash = Password.hash(password, PBKDF2());
   Results results =  await conn.query('SELECT user_id, email, telephonenumber, name FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
   conn.close();
-  String id;
+  String idReturn;
 
   if (results.length > 0) {
     for (var row in results) {
-      id = row[0].toString();
-      user = new User(int.tryParse(id),row[1].toString(),row[2].toString(),row[3].toString());
-      user.type =  "User";
+      int id = row[0];
+      String email = row[1].toString();
+      String telephone = row[2].toString();
+      String name = row[3].toString();
+      user = new User(id, email, telephone, name);
+      user.type = "User";
+      idReturn = row[0].toString();
     }
   }
   conn.close();
-  return id;
+  return idReturn;
 }
 
 void loginGuest(String email, String telephone, String name){
@@ -123,6 +127,15 @@ void createVisit(int restaurantId) async{
   print(timeslot);
   var conn = await MySqlConnection.connect(settings);
   await conn.query('INSERT INTO Visit (date, timeslot, name, telephone, email, restaurant_id) VALUES (?, ?, ?, ?, ?, ?)', [date, timeslot, user.name, user.telephone, user.email, restaurantId]);
+  conn.close();
+}
+
+
+void createAlert(int restaurantId, int tafelnummer) async{
+  DateTime time = DateTime.now();
+  String timeFormatted = DateFormat('HH:mm:ss').format(time);
+  var conn = await MySqlConnection.connect(settings);
+  await conn.query('INSERT INTO Alert (restaurant_id, table_number, time_created) VALUES (?, ?, ?)', [restaurantId, tafelnummer, timeFormatted]);
   conn.close();
 }
 

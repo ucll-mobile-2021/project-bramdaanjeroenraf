@@ -8,8 +8,8 @@ void main() {
     if (!resp) {
       measuresNotLoaded();
     }
+    runApp(MyApp());
   });
-  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

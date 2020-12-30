@@ -6,9 +6,10 @@ class MenuPage extends StatelessWidget {
 
   final List<dynamic> dishes;
   final String restaurant_id;
+  final int restaurant_tafel;
   final String user_id;
 
-  MenuPage({Key key, @required List<dynamic> this.dishes, String this.restaurant_id, String this.user_id}) : super(key: key);
+  MenuPage({Key key, @required List<dynamic> this.dishes, String this.restaurant_id, int this.restaurant_tafel, String this.user_id}) : super(key: key);
 
   Widget getList(){
     Widget child;
@@ -56,7 +57,12 @@ class MenuPage extends StatelessWidget {
           ]
         ),
       ),
-
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          createAlert(int.parse(restaurant_id), restaurant_tafel);
+        },
+        child: Icon(Icons.hail),
+      ),
     );
   }
 }
