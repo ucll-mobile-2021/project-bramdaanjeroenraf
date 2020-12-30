@@ -13,34 +13,18 @@ var settings = new ConnectionSettings(
 User user;
 bool isMailFound = false;
 
-/*Future<bool> login(String email, String password)  async {
-  var conn = await MySqlConnection.connect(settings);
-  String passwordHash = Password.hash(password, PBKDF2());
-  Results results =  await conn.query('SELECT user_id, email, telephonenumber, name FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
-  if (results.length == 1) {
-    for (var row in results) {
-      int id = row[0];
-      String email = row[1].toString();
-      String telephone = row[2].toString();
-      String name = row[3].toString();
-      user = new User(id, email, telephone, name);
-      user.type = "User";
-    }
-    return true;
-  }
-  return false;
-}*/
-
 Future<String> login(String email, String password)  async {
   var conn = await MySqlConnection.connect(settings);
   String passwordHash = Password.hash(password, PBKDF2());
-  Results results =  await conn.query('SELECT user_id FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
+  Results results =  await conn.query('SELECT user_id, email, telephonenumber, name FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
   conn.close();
   String id;
 
   if (results.length > 0) {
     for (var row in results) {
       id = row[0].toString();
+      user = new User(int.tryParse(id),row[1].toString(),row[2].toString(),row[3].toString());
+      user.type =  "User";
     }
   }
   conn.close();
@@ -142,12 +126,6 @@ void createVisit(int restaurantId) async{
   conn.close();
 }
 
-void createVisitGuest(){
-
-}
-
-
-
 Future<List<dynamic>> dishes(String restaurant_id)  async {
   var conn = await MySqlConnection.connect(settings);
   var results =  await conn.query('SELECT `dish_id`,`name`, `price`, `description` FROM `Dish` WHERE restaurant_id = ? ORDER BY 1 ASC', [restaurant_id]);
@@ -183,3 +161,41 @@ Future<List<dynamic>> dishes(String restaurant_id)  async {
     return null;
   }
 }
+
+Future<List<dynamic>> reservationTimeslots(String restaurant_id, String date)  async {
+  var conn = await MySqlConnection.connect(settings);
+  var capacityresult =  await conn.query('SELECT `capacity` FROM `Restaurant` WHERE restaurant_id = ?', [restaurant_id]);
+  var results = await conn.query('SELECT timeslot, number FROM Reservation WHERE date=?',[date]);
+  conn.close();
+
+  int capacity = 0;
+  if (capacityresult.length > 0) {
+    for (var row in capacityresult) {
+      capacity = int.tryParse(row[0].toString());
+    }
+  }
+
+  List<int> list = new List(48);
+  for(int i=0; i<48;i++){
+    list[i] = capacity;
+  }
+
+  if(results.length > 0){
+    for(var row in results){
+      DateTime time = DateFormat("hh:mm:ss").parse(row[0].toString());
+      int index = time.hour*2;
+      if(time.minute==30) index++;
+      for(int i=0; i<6; i++){
+        list[index+i] -= int.tryParse(row[1].toString());
+      }
+    }
+  }
+  return list;
+}
+
+void createReservation(int number, String timeslot, String date, int user_id, int restaurant_id) async{
+  var conn = await MySqlConnection.connect(settings);
+  await conn.query('INSERT INTO Reservation (number, timeslot, date, user_id, restaurant_id) VALUES (?, ?, ?, ?, ?)', [number, timeslot, date, user_id, restaurant_id]);
+  conn.close();
+}
+

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ronaresto/services/database.dart';
 import 'package:ronaresto/screens/reviewpage.dart';
 import 'package:ronaresto/screens/menupage.dart';
+import 'package:ronaresto/screens/reservationpage.dart';
 
 class QrResPage extends StatelessWidget {
 
@@ -86,6 +87,15 @@ class QrResPage extends StatelessWidget {
                 });
               },
               child: Text('Menu'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (contex) => ReservationPage(restaurant_id: restaurant_id, user_id: user_id,)),
+                );
+              },
+              child: Text('Make a reservation'),
             ),
           ],
         ),
