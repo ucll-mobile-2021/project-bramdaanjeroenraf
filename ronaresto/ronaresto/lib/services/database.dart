@@ -36,15 +36,21 @@ Future<String> login(String email, String password)  async {
   String passwordHash = Password.hash(password, PBKDF2());
   Results results =  await conn.query('SELECT user_id FROM User WHERE email = ? AND password = ?', [email, passwordHash]);
   conn.close();
-  String id;
+  String idReturn;
 
   if (results.length > 0) {
     for (var row in results) {
-      id = row[0].toString();
+      int id = row[0];
+      String email = row[1].toString();
+      String telephone = row[2].toString();
+      String name = row[3].toString();
+      user = new User(id, email, telephone, name);
+      user.type = "User";
+      idReturn = row[0].toString();
     }
   }
   conn.close();
-  return id;
+  return idReturn;
 }
 
 void loginGuest(String email, String telephone, String name){
@@ -142,11 +148,13 @@ void createVisit(int restaurantId) async{
   conn.close();
 }
 
-void createVisitGuest(){
-
+void createAlert(int restaurantId, int tafelnummer) async{
+  DateTime time = DateTime.now();
+  String timeFormatted = DateFormat('HH:mm:ss').format(time);
+  var conn = await MySqlConnection.connect(settings);
+  await conn.query('INSERT INTO Alert (restaurant_id, table_number, time_created) VALUES (?, ?, ?)', [restaurantId, tafelnummer, timeFormatted]);
+  conn.close();
 }
-
-
 
 Future<List<dynamic>> dishes(String restaurant_id)  async {
   var conn = await MySqlConnection.connect(settings);
