@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:ronaresto/models/reservation.dart';
 import 'package:ronaresto/services/database.dart';
+import 'package:ronaresto/screens/qrpage.dart';
 import 'package:intl/intl.dart';
 
 class ReservationPage extends StatefulWidget {
@@ -31,7 +32,6 @@ class _ReservationPageState extends State {
   _ReservationPageState(String restaurant_id, String user_id){
     this.restaurant_id = restaurant_id;
     this.user_id = user_id;
-    _reservation.timeslot = "wrong";
   }
 
   @override
@@ -48,7 +48,7 @@ class _ReservationPageState extends State {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           if(selectedDate != null)
-                            Text("gekozen datum: " + DateFormat('yyyy-MM-dd').format(selectedDate)),
+                            Text("gekozen datum: " + _reservation.date),
                           ElevatedButton(
                             onPressed: () => _selectDate(context),
                             child: Text("kies een datum"),
@@ -87,25 +87,18 @@ class _ReservationPageState extends State {
                               child: timeslots,
                             ),
                           if(_reservation.timeslot != null)
-                            Text(_reservation.timeslot)
-
-                          /*ElevatedButton(
-                            onPressed: () {
-                              final form = _formKey.currentState;
-                              if(form.validate()){
-                                form.save();
-                                var info = placeReservation(_review.text, _review.stars, user_id, restaurant_id);
-                                info.then((resp) {
-                                  // info
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id, user_id: user_id)),
-                                  ); // , ipv ;
-                                });
-                              }
-                            },
-                            child: Text('Place review'),
-                          ),*/
+                            Text("gekozen tijdstip: " + _reservation.timeslot),
+                          if(_reservation.timeslot != null)
+                            ElevatedButton(
+                              onPressed: () {
+                                createReservation(_reservation.number, _reservation.timeslot, _reservation.date, user_id, restaurant_id);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (contex) => QrPage(user_id: user_id)),
+                                ); // , ipv ;
+                              },
+                              child: Text('Place reservation'),
+                            ),
                         ]
                     )
                 )
@@ -168,7 +161,7 @@ class _ReservationPageState extends State {
                       recognizer: new TapGestureRecognizer()
                         ..onTap = () async {
                           setState(() {
-                            _reservation.timeslot = times[index];
+                            _reservation.timeslot = times[index]+":00";
                           });
                         },
                     ),
