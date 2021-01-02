@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:ronaresto/models/user.dart';
 
 var settings = new ConnectionSettings(
-    host: 'remotemysql.com',
-    port: 3306,
+    host: '193.191.177.194', // raf-zegers.sb.uclllabs.be
+    port: 4001,
     user: 'ZdZsbXqf4M',
     password: 'Rf1I4vFY8P',
     db: 'ZdZsbXqf4M');
