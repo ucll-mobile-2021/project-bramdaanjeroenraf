@@ -1,0 +1,18 @@
+.bg-red {
+    background-color: #e00049!important;
+  }
+  .btn-primary{
+    color: #fff;
+    background-color: #e00049!important;
+    border-color: #e00049!important;
+  }
+  .navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,.8);
+  }
+  .key{
+    background: #fff;
+    border-radius: .3rem;
+  }
+  a{
+    color: #e00049;
+  }
