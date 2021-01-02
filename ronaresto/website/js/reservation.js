@@ -31,6 +31,7 @@ function getData () {
                 htmlKey.innerHTML = '<th scope="row">' + serverResponse[index].reservation_id + '</th>'
                     + '<td>' + serverResponse[index].restaurant_name + '</td>'
                     + '<td>' + serverResponse[index].user_name + '</td>'
+                    + '<td>' + serverResponse[index].number + '</td>'
                     + '<td>' + serverResponse[index].date + ' ' + serverResponse[index].timeslot.substring(0,5) + '</td>';
 
                 htmlKeys.appendChild(htmlKey)
@@ -40,3 +41,9 @@ function getData () {
     }
 }
 
+// clear list:
+document.getElementById("clearReservations").onclick = clearReservations;
+function clearReservations () {
+    var htmlKeys = document.getElementById("reservation");
+    htmlKeys.innerHTML = '';
+}

@@ -40,3 +40,10 @@ function getDataAlert () {
     }
 }
 
+// clear list:
+document.getElementById("clearAlerts").onclick = clearReservations;
+function clearReservations () {
+    var htmlKeys = document.getElementById("alert");
+    htmlKeys.innerHTML = '';
+}
+

@@ -35,6 +35,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Reservation & Alert</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="http://ronaresto.raf-zegers.sb.uclllabs.be/sql/">SQL</a>
+                </li>
                 <!-- ...nav -->
             </ul>
         </div>
@@ -53,12 +57,14 @@
                 <th scope="col">#</th>
                 <th scope="col">Restaurant</th>
                 <th scope="col">Naam</th>
+                <th scope="col">Personen</th>
                 <th scope="col">Tijd</th>
             </tr>
         </thead>
         <tbody id="reservation">
         </tbody>
     </table>
+    <button type="button" class="btn btn-link" id="clearReservations">clear reservations</button>
     </div>
     <div class="col">
     <h1>Ober Alert</h1>
@@ -74,6 +80,7 @@
         <tbody id="alert">
         </tbody>
     </table>
+    <button type="button" class="btn btn-link" id="clearAlerts">clear alerts</button>
     </div>
   </div>
 

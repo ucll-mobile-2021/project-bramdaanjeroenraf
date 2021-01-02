@@ -7,7 +7,7 @@ if( isset($_GET["id"]) ){
 
 require 'db.con.php';
 
-$sql = "SELECT reservation_id, date, timeslot, r.name as restaurant_name, u.name as user_name
+$sql = "SELECT reservation_id, date, timeslot, `number`, r.name as restaurant_name, u.name as user_name
 FROM `Reservation` res INNER JOIN `Restaurant` r USING(restaurant_id)
 INNER JOIN `User` u USING(user_id)
 WHERE reservation_id > ".strval($min_id)."
