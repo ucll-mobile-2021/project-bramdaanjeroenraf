@@ -130,7 +130,6 @@ void createVisit(int restaurantId) async{
   conn.close();
 }
 
-
 void createAlert(int restaurantId, int tafelnummer) async{
   DateTime time = DateTime.now();
   String timeFormatted = DateFormat('HH:mm:ss').format(time);
@@ -214,4 +213,47 @@ void createReservation(int number, String timeslot, String date, String user_id,
   await conn.query('INSERT INTO Reservation (number, timeslot, date, user_id, restaurant_id) VALUES (?, ?, ?, ?, ?)', [number, timeslot, date, user_id, restaurant_id]);
   conn.close();
 }
+
+Future<List<dynamic>> getReservations(String user_id)  async {
+  var conn = await MySqlConnection.connect(settings);
+  var results =  await conn.query('SELECT `number`, `timeslot`, `date`, `restaurant_id`, `reservation_id` FROM `Reservation` WHERE user_id = ?', [user_id]);
+
+  if (results.length > 0){
+    var reservations = new List(results.length);
+    int i = 0;
+
+    if (results.length > 0) {
+      for (var row in results) {
+        reservations[i] = new List(5);
+        reservations[i][0] = row[0].toString();
+        reservations[i][1] = row[1].toString().substring(0,5);
+        reservations[i][2] = row[2].toString().substring(0,10);
+        reservations[i][4] = row[4].toString();
+        var restaurants =  await conn.query('SELECT `name` FROM `Restaurant` WHERE restaurant_id = ?', [row[3].toString()]);
+        if (restaurants.length > 0) {
+          for (var row in restaurants) {
+            reservations[i][3] = row[0].toString();
+          }
+        }else{
+          reservations[i][3] = 'unavailable';
+        }
+        i++;
+      }
+    }
+    conn.close();
+    return reservations;
+  }
+  else{
+    conn.close();
+    return null;
+  }
+}
+
+void deleteReservation(String reservation_id) async{
+  var conn = await MySqlConnection.connect(settings);
+  await conn.query('DELETE FROM Reservation WHERE reservation_id = ?', [reservation_id]);
+  conn.close();
+}
+
+
 

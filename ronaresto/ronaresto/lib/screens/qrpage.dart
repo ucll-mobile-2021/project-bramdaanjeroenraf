@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:ronaresto/screens/qrrespage.dart';
 import 'package:ronaresto/screens/searchrestaurantpage.dart';
-import 'package:ronaresto/screens/visitformpage.dart';
+import 'package:ronaresto/screens/reservationpage.dart';
 import 'package:ronaresto/services/database.dart';
 
 class QrPage extends StatelessWidget {
@@ -90,6 +90,31 @@ class QrPage extends StatelessWidget {
                   ); // , ipv ;
                 },
                 child: Text('Search restaurant', style: TextStyle(fontSize: 20)),
+              ),
+            ),
+            const SizedBox(height: 30),
+            ButtonTheme(
+              minWidth: 200.0,
+              padding: const EdgeInsets.all(10.0),
+              child: RaisedButton(
+                onPressed: () {
+                  var info = getReservations(user_id);
+                  info.then((resp){
+                    if(resp==null){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (contex) => ReservationPage(reservations: [],user_id: user_id)),
+                      );
+                    }
+                    else{
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (contex) => ReservationPage(reservations: resp,user_id: user_id)),
+                      );
+                    }
+                  });// , ipv ;
+                },
+                child: Text('See reservations', style: TextStyle(fontSize: 20)),
               ),
             ),
             const SizedBox(height: 30),

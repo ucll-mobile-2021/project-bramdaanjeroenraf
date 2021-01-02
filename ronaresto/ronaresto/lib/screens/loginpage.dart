@@ -106,7 +106,7 @@ class _LoginFormState extends State<LoginForm> {
                     else{
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (contex) => QrPage(user_id: resp)),
+                        MaterialPageRoute(builder: (context) => QrPage(user_id: resp)),
                       ); // , ipv ;
                     }
                   });
