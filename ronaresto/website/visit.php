@@ -1,5 +1,5 @@
 <?php
-$titel = "Reservation & Alert";
+$titel = "visit";
 include "include/header.php";
 ?>
 
@@ -8,45 +8,27 @@ include "include/header.php";
 
 <div class="row align-items-start">
     <div class="col">
-    <h1>Reservation</h1>
+    <h1>Visit</h1>
     <table class="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Restaurant</th>
+                <th scope="col">Datum</th>
+                <th scope="col">Tijd</th>
                 <th scope="col">Naam</th>
-                <th scope="col">Personen</th>
-                <th scope="col">Tijd</th>
+                <th scope="col">Telefoon</th>
+                <th scope="col">Email</th>
             </tr>
         </thead>
-        <tbody id="reservation">
+        <tbody id="visit">
         </tbody>
     </table>
-    <button type="button" class="btn btn-link" id="clearReservations">clear reservations</button>
-    </div>
-    <div class="col">
-    <h1>Ober Alert</h1>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Restaurant</th>
-                <th scope="col">Tafel</th>
-                <th scope="col">Tijd</th>
-            </tr>
-        </thead>
-        <tbody id="alert">
-        </tbody>
-    </table>
-    <button type="button" class="btn btn-link" id="clearAlerts">clear alerts</button>
-    </div>
+    <button type="button" class="btn btn-link" id="clearVisit">clear visits</button>
   </div>
 
     
     </main>
-
-
-    
 
     <!-- jquery enz... -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -54,7 +36,6 @@ include "include/header.php";
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <!-- js scripts -->
     <script src="js/toast.js"></script>
-    <script src="js/reservation.js"></script>
-    <script src="js/alert.js"></script>
+    <script src="js/visit.js"></script>
   </body>
 </html>

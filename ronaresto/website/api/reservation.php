@@ -5,7 +5,7 @@ if( isset($_GET["id"]) ){
     $min_id = (int) $_GET["id"];
 }
 
-require 'db.con.php';
+require '../include/db.con.php';
 
 $sql = "SELECT reservation_id, date, timeslot, `number`, r.name as restaurant_name, u.name as user_name
 FROM `Reservation` res INNER JOIN `Restaurant` r USING(restaurant_id)

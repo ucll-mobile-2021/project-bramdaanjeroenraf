@@ -7,10 +7,10 @@ if( isset($_GET["id"]) ){
 
 require '../include/db.con.php';
 
-$sql = "SELECT a.alert_id, r.name as restaurant_name, a.table_number, a.time_created 
-FROM `Alert` a INNER JOIN `Restaurant` r USING(restaurant_id)
-WHERE a.alert_id > ".strval($min_id)."
-ORDER BY 1";
+$sql = "SELECT v.visit_id, v.date, v.timeslot, v.name, v.telephone, v.email, r.name as restaurant 
+FROM `Visit` v INNER JOIN `Restaurant` r USING(restaurant_id)
+WHERE v.visit_id > ".strval($min_id)."
+ORDER BY 1,2;";
 
 $result = $conn->query($sql);
 
