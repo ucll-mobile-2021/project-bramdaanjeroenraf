@@ -67,7 +67,6 @@ Future<List<dynamic>> findRestaurant(String name)  async {
       info[1] = row[1].toString();
       info[2] = row[2].toString();
     }
-    print('resto ID'+info[0].toString());
   }
   conn.close();
   return info;
@@ -124,7 +123,6 @@ void createVisit(int restaurantId) async{
     time = time.subtract(Duration(minutes: time.minute, seconds: time.second));
   }
   String timeslot = DateFormat('HH:mm:ss').format(time);
-  print(timeslot);
   var conn = await MySqlConnection.connect(settings);
   await conn.query('INSERT INTO Visit (date, timeslot, name, telephone, email, restaurant_id) VALUES (?, ?, ?, ?, ?, ?)', [date, timeslot, user.name, user.telephone, user.email, restaurantId]);
   conn.close();

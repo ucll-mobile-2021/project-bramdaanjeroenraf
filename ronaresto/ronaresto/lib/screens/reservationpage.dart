@@ -35,8 +35,8 @@ class ReservationPage extends StatelessWidget {
                                 onPressed: (){
                                   deleteReservation(reservations[index][4]);
                                   Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => QrPage(user_id: user_id)),
+                                  context,
+                                  MaterialPageRoute(builder: (context) => QrPage(user_id: user_id)),
                                   ); // , ipv ;
                                 },
                               ),
@@ -86,6 +86,4 @@ class ReservationPage extends StatelessWidget {
     }
     return value;
   }
-
-
 }
