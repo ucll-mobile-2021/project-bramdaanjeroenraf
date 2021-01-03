@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ronaresto/services/database.dart';
 import 'package:ronaresto/screens/reviewpage.dart';
 import 'package:ronaresto/screens/menupage.dart';
-import 'package:ronaresto/screens/reservationpage.dart';
+import 'package:ronaresto/screens/reservationplacingpage.dart';
 
 class QrResPage extends StatelessWidget {
 

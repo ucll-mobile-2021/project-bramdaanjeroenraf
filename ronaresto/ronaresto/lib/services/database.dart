@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:ronaresto/models/user.dart';
 
 var settings = new ConnectionSettings(
-    host: 'remotemysql.com',
-    port: 3306,
+    host: '193.191.177.194', // raf-zegers.sb.uclllabs.be
+    port: 4001,
     user: 'ZdZsbXqf4M',
     password: 'Rf1I4vFY8P',
     db: 'ZdZsbXqf4M');
@@ -128,7 +128,6 @@ void createVisit(int restaurantId) async{
   conn.close();
 }
 
-
 void createAlert(int restaurantId, int tafelnummer) async{
   DateTime time = DateTime.now();
   String timeFormatted = DateFormat('HH:mm:ss').format(time);
@@ -188,7 +187,9 @@ Future<List<dynamic>> reservationTimeslots(String restaurant_id, String date)  a
 
   List<int> list = new List(48);
   for(int i=0; i<48;i++){
-    list[i] = capacity;
+    //reservation must be between 8:00 and 22:00
+    if(i<16 || i>44) list[i] = 0;
+    else list[i] = capacity;
   }
 
   if(results.length > 0){
@@ -196,17 +197,61 @@ Future<List<dynamic>> reservationTimeslots(String restaurant_id, String date)  a
       DateTime time = DateFormat("hh:mm:ss").parse(row[0].toString());
       int index = time.hour*2;
       if(time.minute==30) index++;
-      for(int i=0; i<6; i++){
-        list[index+i] -= int.tryParse(row[1].toString());
+      //expect a staying time of 2 hours, subtract number of people 2 hours before (new reservation will also stay 2 hours) and after there reservation
+      for(int i=-3; i<4; i++){
+        if(index + i >= 0 && index + i < list.length) list[index+i] -= int.tryParse(row[1].toString());
       }
     }
   }
   return list;
 }
 
-void createReservation(int number, String timeslot, String date, int user_id, int restaurant_id) async{
+void createReservation(int number, String timeslot, String date, String user_id, String restaurant_id) async{
   var conn = await MySqlConnection.connect(settings);
   await conn.query('INSERT INTO Reservation (number, timeslot, date, user_id, restaurant_id) VALUES (?, ?, ?, ?, ?)', [number, timeslot, date, user_id, restaurant_id]);
   conn.close();
 }
+
+Future<List<dynamic>> getReservations(String user_id)  async {
+  var conn = await MySqlConnection.connect(settings);
+  var results =  await conn.query('SELECT `number`, `timeslot`, `date`, `restaurant_id`, `reservation_id` FROM `Reservation` WHERE user_id = ?', [user_id]);
+
+  if (results.length > 0){
+    var reservations = new List(results.length);
+    int i = 0;
+
+    if (results.length > 0) {
+      for (var row in results) {
+        reservations[i] = new List(5);
+        reservations[i][0] = row[0].toString();
+        reservations[i][1] = row[1].toString().substring(0,5);
+        reservations[i][2] = row[2].toString().substring(0,10);
+        reservations[i][4] = row[4].toString();
+        var restaurants =  await conn.query('SELECT `name` FROM `Restaurant` WHERE restaurant_id = ?', [row[3].toString()]);
+        if (restaurants.length > 0) {
+          for (var row in restaurants) {
+            reservations[i][3] = row[0].toString();
+          }
+        }else{
+          reservations[i][3] = 'unavailable';
+        }
+        i++;
+      }
+    }
+    conn.close();
+    return reservations;
+  }
+  else{
+    conn.close();
+    return null;
+  }
+}
+
+void deleteReservation(String reservation_id) async{
+  var conn = await MySqlConnection.connect(settings);
+  await conn.query('DELETE FROM Reservation WHERE reservation_id = ?', [reservation_id]);
+  conn.close();
+}
+
+
 

@@ -106,7 +106,7 @@ class _LoginFormState extends State<LoginForm> {
                     else{
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (contex) => QrPage(user_id: resp)),
+                        MaterialPageRoute(builder: (context) => QrPage(user_id: resp)),
                       ); // , ipv ;
                     }
                   });
@@ -120,7 +120,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   String _emailValidator(String value){
-    String pattern = r'^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]+$';
+    String pattern = r'^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]+$';
     RegExp regExp = new RegExp(pattern);
     if (!regExp.hasMatch(value)) {
       return 'geen geldige mail';
