@@ -11,7 +11,6 @@ var settings = new ConnectionSettings(
     db: 'ZdZsbXqf4M');
 
 User user;
-bool isMailFound = false;
 
 Future<String> login(String email, String password)  async {
   var conn = await MySqlConnection.connect(settings);
@@ -48,11 +47,11 @@ void register(String name, String email, String password, String phone) async {
   conn.close();
 }
 
-void findByMail(String email) async {
+Future<bool> findByMail(String email) async {
   var conn = await MySqlConnection.connect(settings);
-  Results results =  await conn.query('SELECT COUNT(user_id) FROM User WHERE email = ?', [email]);
+  Results results =  await conn.query('SELECT user_id FROM User WHERE email = ?', [email]);
   conn.close();
-  isMailFound = results.fields.first != 0;
+  return results.length != 0;
 }
 
 Future<List<dynamic>> findRestaurant(String name)  async {

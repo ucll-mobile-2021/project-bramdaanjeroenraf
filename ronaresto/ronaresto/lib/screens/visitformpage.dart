@@ -56,7 +56,7 @@ class _VisitFormState extends State<VisitForm> {
               controller: tecName,
               validator: (value){
                 if (value.isEmpty) {
-                  return "Fout";
+                  return "Geef alstublieft een naam in";
                 }
                 return null;
               },
@@ -68,9 +68,9 @@ class _VisitFormState extends State<VisitForm> {
               controller: tecEmail,
               validator: (value){
                 if (value.isEmpty) {
-                  return "Fout";
+                  return "Geef alstublieft een emailadres in";
                 }
-                return null;
+                else return _emailValidator(value);
               },
             ),
             const SizedBox(height: 30),
@@ -81,9 +81,9 @@ class _VisitFormState extends State<VisitForm> {
               controller: tecPhone,
               validator: (value){
                 if (value.isEmpty) {
-                  return "Fout";
+                  return "Geef alstublieft een telefoonnummer in";
                 }
-                return null;
+                return _phoneValidator(value);
               },
             ),
             const SizedBox(height: 60),
@@ -100,5 +100,23 @@ class _VisitFormState extends State<VisitForm> {
           ]
       ),
     );
+  }
+
+  String _emailValidator(String value){
+    String pattern = r'^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]+$';
+    RegExp regExp = new RegExp(pattern);
+    if (!regExp.hasMatch(value)) {
+      return 'Geen geldige mail';
+    }
+    return null;
+  }
+
+  String _phoneValidator(String value){
+    String pattern = r'^[0-9]{10}$';
+    RegExp regExp = new RegExp(pattern);
+    if(!regExp.hasMatch(value)){
+      return 'Een telefoonnummer is een reeks van 10 cijfers';
+    }
+    return null;
   }
 }

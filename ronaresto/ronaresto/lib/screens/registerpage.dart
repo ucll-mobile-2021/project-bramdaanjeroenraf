@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ronaresto/services/database.dart' as db;
+import 'package:ronaresto/services/database.dart';
+import 'package:ronaresto/screens/homepage.dart';
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -57,7 +58,7 @@ class _RegisterFormState extends State<RegisterForm> {
               controller: tecName,
               validator: (value){
                 if (value.isEmpty) {
-                  return "Fout";
+                  return "Geef alstublieft een naam in";
                 }
                 return null;
               },
@@ -67,14 +68,9 @@ class _RegisterFormState extends State<RegisterForm> {
                 labelText: 'E-mail adres',
               ),
               controller: tecEmail,
-              validator: (value){
-                db.findByMail(tecEmail.text);
-                if (value.isEmpty) {
-                  return "Fout";
-                }
-                if(db.isMailFound){
-                  return "Mail is reeds geregistreerd";
-                }
+              validator: (value) {
+                if (value.isEmpty) return "Geef alstublieft een e-mail in";
+                if(_emailValidator(value)) return "geen geldige mail";
                 return null;
               },
             ),
@@ -87,7 +83,7 @@ class _RegisterFormState extends State<RegisterForm> {
               controller: tecPass,
               validator: (value){
                 if (value.isEmpty) {
-                  return "Fout";
+                  return "Geef alstublieft een wachtwoord in";
                 }
                 return null;
               },
@@ -101,8 +97,9 @@ class _RegisterFormState extends State<RegisterForm> {
               controller: tecConPass,
               validator: (value){
                 if (value.isEmpty) {
-                  return "Fout";
+                  return "Bevestig alstublieft uw wachtwoord";
                 }
+                if(tecPass.text != value) return "De wachtwoorden moeten hetzelfde zijn";
                 return null;
               },
             ),
@@ -114,8 +111,9 @@ class _RegisterFormState extends State<RegisterForm> {
               controller: tecPhone,
               validator: (value){
                 if (value.isEmpty) {
-                  return "Fout";
+                  return "Geef alstublieft een telefoonnummer in";
                 }
+                if(_phoneValidator(value)) return "Een telefoonnummer is een reeks van 10 cijfers";
                 return null;
               },
             ),
@@ -123,8 +121,43 @@ class _RegisterFormState extends State<RegisterForm> {
             ElevatedButton(
               onPressed: () {
                 if (_fk.currentState.validate() && tecPass.text == tecConPass.text) {
-                  db.register(tecName.text, tecEmail.text, tecPass.text, tecPhone.text);
-                  Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("We verwerken uw gegevens, even geduld alstublieft"),
+                      );
+                    },
+                  );// , ipv ;
+                  var bool = findByMail(tecEmail.text);
+                  bool.then((value) {
+                    if(value == false){
+                      register(tecName.text, tecEmail.text, tecPass.text, tecPhone.text);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    }
+                    else{
+                      Navigator.of(context).pop();
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Er bestaat al een account met deze mail"),
+                            actions: <Widget> [
+                              FlatButton(
+                                child: Text('ok'),
+                                onPressed: (){
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  });
                 }
               },
               child: Text('Registreren'),
@@ -133,4 +166,17 @@ class _RegisterFormState extends State<RegisterForm> {
       ),
     );
   }
+
+  bool _emailValidator(String value){
+    String pattern = r'^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]+$';
+    RegExp regExp = new RegExp(pattern);
+    return !regExp.hasMatch(value);
+  }
+
+  bool _phoneValidator(String value){
+    String pattern = r'^[0-9]{10}$';
+    RegExp regExp = new RegExp(pattern);
+    return !regExp.hasMatch(value);
+  }
+
 }

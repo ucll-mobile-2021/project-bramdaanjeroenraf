@@ -77,6 +77,14 @@ class _LoginFormState extends State<LoginForm> {
                 final form = _fk.currentState;
                 if(form.validate()) {
                   form.save();
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("We verwerken uw gegevens, even geduld alstublieft"),
+                      );
+                    },
+                  );// , ipv ;
                   var info = login(tecEmail.text, tecPassword.text);
                   info.then((resp) {
                     // info
@@ -85,6 +93,7 @@ class _LoginFormState extends State<LoginForm> {
                         content: Text('incorrect '),
                       );
                       Scaffold.of(context).showSnackBar(error);*/
+                      Navigator.of(context).pop();
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -106,7 +115,7 @@ class _LoginFormState extends State<LoginForm> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => QrPage(user_id: resp)),
-                      ); // , ipv ;
+                      );
                     }
                   });
                 }

@@ -24,7 +24,7 @@ class _ReservationPageState extends State {
 
   DateTime selectedDate;
 
-  Widget timeslots = Text("no hours");
+  Widget timeslots = Text("loading...");
 
   final _reservation = Reservation();
   final _formKey = GlobalKey<FormState>();
@@ -76,7 +76,7 @@ class _ReservationPageState extends State {
                                 final form = _formKey.currentState;
                                 if(form.validate()){
                                   form.save();
-                                  timeslots = await _getAvailableHours();
+                                  _getAvailableHours();
                                 }
                               },
                               child: Text("bevestig het aantal"),
@@ -145,33 +145,35 @@ class _ReservationPageState extends State {
       if(hours[i]) times.add(string);
     }
 
-    Widget child = ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: times.length,
-        itemBuilder: (BuildContext context, int index){
-          return Column(
-              children: <Widget>[
-                Container(
-                  width: 100.0,
-                  child:
-                  RichText(
-                    text: new TextSpan(
-                      text: times[index],
-                      style: new TextStyle(color: Colors.blue, fontSize: 30),
-                      recognizer: new TapGestureRecognizer()
-                        ..onTap = () async {
-                          setState(() {
-                            _reservation.timeslot = times[index];
-                          });
-                        },
+    setState(() {
+      timeslots = ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: times.length,
+          itemBuilder: (BuildContext context, int index){
+            return Column(
+                children: <Widget>[
+                  Container(
+                    width: 100.0,
+                    child:
+                    RichText(
+                      text: new TextSpan(
+                        text: times[index],
+                        style: new TextStyle(color: Colors.blue, fontSize: 30),
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () async {
+                            setState(() {
+                              _reservation.timeslot = times[index];
+                            });
+                          },
+                      ),
                     ),
-                  ),
-                )
-              ]
-          );
-        }
-    );
-    return child;
+                  )
+                ]
+            );
+          }
+      );
+    });
+
   }
 }
 
