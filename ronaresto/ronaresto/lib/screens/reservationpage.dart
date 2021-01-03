@@ -20,7 +20,7 @@ class ReservationPage extends StatelessWidget {
           itemBuilder: (BuildContext context, int index){
             return Column(
                 children: <Widget>[
-                  Text(reservations[index][3]+" : "+reservations[index][2]+" on "+reservations[index][1] , style: TextStyle(fontSize: 20)),
+                  Text(reservations[index][3]+" : "+reservations[index][2]+" on "+_hourValidator(reservations[index][1]) , style: TextStyle(fontSize: 20)),
                   Text("for: "+reservations[index][0], style: TextStyle(fontSize: 14)),
                   ElevatedButton(
                     onPressed: () {
@@ -76,6 +76,15 @@ class ReservationPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _hourValidator(String value){
+    String pattern = r'^[0-9]:[0-9]{2}:$';
+    RegExp regExp = new RegExp(pattern);
+    if (regExp.hasMatch(value)) {
+      return value.substring(0,4);
+    }
+    return value;
   }
 
 

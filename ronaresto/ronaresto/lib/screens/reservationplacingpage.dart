@@ -91,7 +91,7 @@ class _ReservationPageState extends State {
                           if(_reservation.timeslot != null)
                             ElevatedButton(
                               onPressed: () {
-                                createReservation(_reservation.number, _reservation.timeslot, _reservation.date, user_id, restaurant_id);
+                                createReservation(_reservation.number, _reservation.timeslot+":00", _reservation.date, user_id, restaurant_id);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (contex) => QrPage(user_id: user_id)),
@@ -161,7 +161,7 @@ class _ReservationPageState extends State {
                       recognizer: new TapGestureRecognizer()
                         ..onTap = () async {
                           setState(() {
-                            _reservation.timeslot = times[index]+":00";
+                            _reservation.timeslot = times[index];
                           });
                         },
                     ),
