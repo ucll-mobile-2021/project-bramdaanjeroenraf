@@ -2,6 +2,8 @@
 
 
 var alert_id = 0;
+var alert_push = false;
+
 window.onload = updateAlert;
 setInterval(updateAlert, 3000);
 
@@ -24,8 +26,8 @@ function getDataAlert () {
             for (index = 0; index < serverResponse.length; index++) {
                 var htmlKey = document.createElement('tr');
 
-                if(alert_id < serverResponse[index].alert_id ){
-                    alert_id = serverResponse[index].alert_id;
+                if(alert_id < parseInt(serverResponse[index].alert_id) ){
+                    alert_id = parseInt(serverResponse[index].alert_id);
                 }
 
                 htmlKey.innerHTML = '<th scope="row">' + serverResponse[index].alert_id + '</th>'
@@ -35,7 +37,15 @@ function getDataAlert () {
 
                 htmlKeys.appendChild(htmlKey)
 
+                // push notification:
+                if(alert_push){
+                    var pushtime = new Date();
+                    createToast("Nieuw Ober Alert" , pushtime.toLocaleTimeString() , 'tafel ' + serverResponse[index].table_number + " wilt een ober.");
+                }
+
             }
+
+            alert_push = true; // enable push meldingen na eerste keer zonder melding
         }
     }
 }

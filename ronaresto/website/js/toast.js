@@ -35,6 +35,6 @@ function createToast(title, time, content){
 }
 
 // gebruik:
-createToast("New Reservation1" , "3/12/2021","content");
+//createToast("New Reservation1" , "3/12/2021","content");
 
 
