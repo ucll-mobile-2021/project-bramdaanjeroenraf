@@ -56,7 +56,6 @@ class QrPage extends StatelessWidget {
                 onPressed: () {
                   final scanResult = _scanQr();
                   scanResult.then((resp) {
-                    print(resp);
                     String name = resp.split(";").first;
                     int tafel = 0;
                     if( resp.split(";").length == 2){

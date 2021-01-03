@@ -76,7 +76,7 @@ class _ReservationPageState extends State {
                                 final form = _formKey.currentState;
                                 if(form.validate()){
                                   form.save();
-                                  timeslots = await _getAvailableHours();
+                                  await _getAvailableHours();
                                 }
                               },
                               child: Text("bevestig het aantal"),
