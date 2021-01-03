@@ -48,12 +48,38 @@ class _ReservationPageState extends State {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           if(selectedDate != null)
-                            Text("gekozen datum: " + _reservation.date),
-                          ElevatedButton(
-                            onPressed: () => _selectDate(context),
-                            child: Text("kies een datum"),
-                          ),
+                            Text("Gekozen datum: " + _reservation.date),
                           if(selectedDate != null)
+                            ElevatedButton(
+                              onPressed: (){
+                                setState(() {
+                                  selectedDate = null;
+                                  _reservation.date = null;
+                                  _reservation.number = null;
+                                  _reservation.timeslot = null;
+                                });
+                              },
+                              child: Text("Wijzig de datum"),
+                            ),
+                          if(selectedDate == null)
+                            ElevatedButton(
+                              onPressed: () => _selectDate(context),
+                              child: Text("Kies een datum"),
+                            ),
+
+                          if(_reservation.number != null)
+                            Text("Gekozen aantal: " + _reservation.number.toString()),
+                          if(_reservation.number != null)
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _reservation.number = null;
+                                  _reservation.timeslot = null;
+                                });
+                              },
+                              child: Text("Wijzig het aantal personen"),
+                            ),
+                          if(selectedDate != null && _reservation.number == null)
                             TextFormField(
                               decoration:
                               InputDecoration(labelText: 'aantal personen'),
@@ -70,7 +96,7 @@ class _ReservationPageState extends State {
                               onSaved: (val) =>
                                   setState(() => _reservation.number= int.tryParse(val)),
                             ),
-                          if(selectedDate != null)
+                          if(selectedDate != null && _reservation.number ==null)
                             ElevatedButton(
                               onPressed: () async {
                                 final form = _formKey.currentState;
@@ -81,6 +107,7 @@ class _ReservationPageState extends State {
                               },
                               child: Text("bevestig het aantal"),
                             ),
+
                           if(_reservation.number != null)
                             Container(
                               height: 50.0,
@@ -173,7 +200,6 @@ class _ReservationPageState extends State {
           }
       );
     });
-
   }
 }
 
