@@ -65,7 +65,7 @@ class QrResPage extends StatelessWidget {
                   }
                 });
               },
-              child: Text('Reviews'),
+              child: Text('Beoordelingen'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -95,7 +95,7 @@ class QrResPage extends StatelessWidget {
                   MaterialPageRoute(builder: (contex) => ReservationPage(restaurant_id: restaurant_id, user_id: user_id,)),
                 );
               },
-              child: Text('Make a reservation'),
+              child: Text('Maak een reservatie'),
             ),
           ],
         ),

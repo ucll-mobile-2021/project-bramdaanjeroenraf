@@ -13,14 +13,14 @@ class ReviewPage extends StatelessWidget {
   Widget getList(){
     Widget child;
     if(reviews.length == 0){
-      child = Text("no reviews", style: TextStyle(fontSize: 30));
+      child = Text("Geen beoordelingen", style: TextStyle(fontSize: 30));
     }else{
       child = ListView.builder(
           itemCount: reviews.length,
           itemBuilder: (BuildContext context, int index){
             return Column(
                 children: <Widget>[
-                  Text(reviews[index][2]+" : "+reviews[index][1]+" stars" , style: TextStyle(fontSize: 20)),
+                  Text(reviews[index][2]+" : "+reviews[index][1]+" sterren" , style: TextStyle(fontSize: 20)),
                   Text(reviews[index][0], style: TextStyle(fontSize: 12)),
                 ]
             );
@@ -52,7 +52,7 @@ class ReviewPage extends StatelessWidget {
                   ); // , ipv ;
                 }
               },
-              child: Text('add review'),
+              child: Text('Voeg beoordeling toe'),
             ),
 
           ],

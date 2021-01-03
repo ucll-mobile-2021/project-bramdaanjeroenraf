@@ -42,10 +42,10 @@ class _ReviewPlacingPageState extends State {
                         children: [
                           TextFormField(
                             decoration:
-                            InputDecoration(labelText: 'comment'),
+                            InputDecoration(labelText: 'Commentaar'),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter a comment';
+                                return 'Voeg alstublieft commentaar toe';
                               }
                               else return null;
                             },
@@ -54,14 +54,14 @@ class _ReviewPlacingPageState extends State {
                           ),
                           TextFormField(
                               decoration:
-                              InputDecoration(labelText: 'stars'),
+                              InputDecoration(labelText: 'sterren'),
                               keyboardType: TextInputType.number,
                               validator: (value) {
                                 if (value.isEmpty) {
-                                  return 'Please enter the number of stars.';
+                                  return 'Voeg alstublieft het aantal sterren toe';
                                 }
                                 if (int.tryParse(value) > 5 || int.tryParse(value) < 0 ){
-                                  return 'Please enter a number between 0 and 5.';
+                                  return 'Geef alstublieft een nummer tussen 0 en 5';
                                 }
                                 else return null;
                               },
@@ -84,7 +84,7 @@ class _ReviewPlacingPageState extends State {
                                 });
                               }
                             },
-                            child: Text('Place review'),
+                            child: Text('Plaats beoordeling'),
                           ),
                         ]
                     )

@@ -56,14 +56,14 @@ class _ReservationPageState extends State {
                           if(selectedDate != null)
                             TextFormField(
                               decoration:
-                              InputDecoration(labelText: 'number of people'),
+                              InputDecoration(labelText: 'aantal personen'),
                               keyboardType: TextInputType.number,
                               validator: (value) {
                                 if (value.isEmpty) {
-                                  return 'Please enter the number of people.';
+                                  return 'Geef alstublieft een aantal personen in.';
                                 }
                                 if (int.tryParse(value) > 10 || int.tryParse(value) < 0 ){
-                                  return 'Please enter a number between 0 and 10.';
+                                  return 'Geef alstublieft een nummer tussen 0 en 10.';
                                 }
                                 else return null;
                               },
@@ -97,7 +97,7 @@ class _ReservationPageState extends State {
                                   MaterialPageRoute(builder: (contex) => QrPage(user_id: user_id)),
                                 ); // , ipv ;
                               },
-                              child: Text('Place reservation'),
+                              child: Text('Plaats reservatie'),
                             ),
                         ]
                     )

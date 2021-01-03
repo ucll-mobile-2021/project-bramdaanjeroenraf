@@ -14,7 +14,7 @@ class MenuPage extends StatelessWidget {
   Widget getList(){
     Widget child;
     if(dishes.length == 0){
-      child = Text("no dishes", style: TextStyle(fontSize: 30));
+      child = Text("geen gerechten teruggevonden", style: TextStyle(fontSize: 30));
     }else{
       child = ListView.builder(
           shrinkWrap: true,

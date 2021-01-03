@@ -81,7 +81,6 @@ class _LoginFormState extends State<LoginForm> {
                   info.then((resp) {
                     // info
                     if(resp==null){
-                      print('FOUTE LOGIN');
                       /*final error = SnackBar(
                         content: Text('incorrect '),
                       );

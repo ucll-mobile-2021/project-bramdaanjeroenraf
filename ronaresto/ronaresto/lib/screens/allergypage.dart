@@ -13,7 +13,7 @@ class AllergyPage extends StatelessWidget {
   Widget getList(){ // allergies
     Widget child;
     if(dish[4].length == 0){
-      child = Text("no allergy", style: TextStyle(fontSize: 16));
+      child = Text("geen allergenen ", style: TextStyle(fontSize: 16));
     }else{
       child = ListView.builder(
           itemCount: dish[4].length,
@@ -37,18 +37,15 @@ class AllergyPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-
             Text(dish[1], style: TextStyle(fontSize: 24)),
             Text('prijs: '+dish[2]+'euro', style: TextStyle(fontSize: 20)),
             Text('beschrijving:', style: TextStyle(fontSize: 20)),
             Text(dish[3], style: TextStyle(fontSize: 16)),
-            Text('allergieën:', style: TextStyle(fontSize: 20)),
+            Text('allergenen:', style: TextStyle(fontSize: 20)),
             Container(
                 height: 200.0,
                 child: getList()
             ),
-
-
           ],
         ),
 

@@ -89,7 +89,7 @@ class QrPage extends StatelessWidget {
                     MaterialPageRoute(builder: (contex) => SearchRestaurantPage(user_id: user_id)),
                   ); // , ipv ;
                 },
-                child: Text('Search restaurant', style: TextStyle(fontSize: 20)),
+                child: Text('Zoek restaurant', style: TextStyle(fontSize: 20)),
               ),
             ),
             const SizedBox(height: 30),
@@ -114,7 +114,7 @@ class QrPage extends StatelessWidget {
                     }
                   });// , ipv ;
                 },
-                child: Text('See reservations', style: TextStyle(fontSize: 20)),
+                child: Text('Bekijk reservaties', style: TextStyle(fontSize: 20)),
               ),
             ),
             const SizedBox(height: 30),

@@ -39,10 +39,10 @@ class _SearchRestaurantPageState extends State {
                         children: [
                           TextFormField(
                             decoration:
-                            InputDecoration(labelText: 'name'),
+                            InputDecoration(labelText: 'Naam'),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter name';
+                                return 'Geef alstublieft een naam in';
                               }
                               else return null;
                             },
@@ -62,10 +62,10 @@ class _SearchRestaurantPageState extends State {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                          title: Text("restaurant niet teruggevonden"),
+                                          title: Text("Restaurant niet teruggevonden"),
                                           actions: <Widget> [
                                             FlatButton(
-                                              child: Text('ok'),
+                                              child: Text('Ok'),
                                               onPressed: (){
                                                 Navigator.of(context).pop();
                                               },
@@ -85,7 +85,7 @@ class _SearchRestaurantPageState extends State {
                                 });
                               }
                             },
-                            child: Text('search'),
+                            child: Text('Zoek'),
                           ),
                         ]
                     )

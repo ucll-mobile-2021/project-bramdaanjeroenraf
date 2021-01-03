@@ -12,7 +12,7 @@ class ReservationPage extends StatelessWidget {
   Widget getList(){
     Widget child;
     if(reservations.length == 0){
-      child = Text("no reservations", style: TextStyle(fontSize: 30));
+      child = Text("Geen reservaties", style: TextStyle(fontSize: 30));
     }else{
       child = ListView.builder(
           scrollDirection: Axis.vertical,
@@ -20,18 +20,18 @@ class ReservationPage extends StatelessWidget {
           itemBuilder: (BuildContext context, int index){
             return Column(
                 children: <Widget>[
-                  Text(reservations[index][3]+" : "+reservations[index][2]+" on "+_hourValidator(reservations[index][1]) , style: TextStyle(fontSize: 20)),
-                  Text("for: "+reservations[index][0], style: TextStyle(fontSize: 14)),
+                  Text(reservations[index][3]+" : "+reservations[index][2]+" om "+_hourValidator(reservations[index][1]) , style: TextStyle(fontSize: 20)),
+                  Text("voor: "+reservations[index][0], style: TextStyle(fontSize: 14)),
                   ElevatedButton(
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Are you sure?"),
+                            title: Text("Bent u zeker?"),
                             actions: <Widget> [
                               FlatButton(
-                                child: Text('yes'),
+                                child: Text('Ja'),
                                 onPressed: (){
                                   deleteReservation(reservations[index][4]);
                                   Navigator.push(
@@ -41,7 +41,7 @@ class ReservationPage extends StatelessWidget {
                                 },
                               ),
                               FlatButton(
-                                child: Text('no'),
+                                child: Text('Nee'),
                                 onPressed: (){
                                   Navigator.of(context).pop();
                                 },
@@ -51,7 +51,7 @@ class ReservationPage extends StatelessWidget {
                         },
                       );
                     },
-                    child: Text('Cancel'),
+                    child: Text('Annuleren'),
                   ),
                 ]
             );
