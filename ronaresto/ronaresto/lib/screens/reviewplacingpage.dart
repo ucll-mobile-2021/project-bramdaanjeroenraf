@@ -8,10 +8,14 @@ class ReviewPlacingPage extends StatefulWidget {
   final String restaurant_id;
   final String user_id;
 
-  ReviewPlacingPage({Key key, @required String this.restaurant_id, String this.user_id}) : super(key: key);
+  final String restaurant_name;
+  final int restaurant_tafel;
+  final String restaurant_location;
+
+  ReviewPlacingPage({Key key, @required String this.restaurant_id, String this.user_id, int this.restaurant_tafel, String this.restaurant_location, String this.restaurant_name}) : super(key: key);
 
   @override
-  _ReviewPlacingPageState createState() => _ReviewPlacingPageState(restaurant_id, user_id);
+  _ReviewPlacingPageState createState() => _ReviewPlacingPageState(restaurant_id, user_id,restaurant_tafel,restaurant_location,restaurant_name);
 }
 
 class _ReviewPlacingPageState extends State {
@@ -19,12 +23,20 @@ class _ReviewPlacingPageState extends State {
   String restaurant_id;
   String user_id;
 
+  String restaurant_name;
+  int restaurant_tafel;
+  String restaurant_location;
+
   final _review = Review();
   final _formKey = GlobalKey<FormState>();
 
-  _ReviewPlacingPageState(String restaurant_id, String user_id){
+  _ReviewPlacingPageState(String restaurant_id, String user_id, int restaurant_tafel, String restaurant_location, String restaurant_name){
     this.restaurant_id = restaurant_id;
     this.user_id = user_id;
+
+    this.restaurant_name = restaurant_name;
+    this.restaurant_location = restaurant_location;
+    this.restaurant_tafel = restaurant_tafel;
   }
 
   @override
@@ -78,7 +90,7 @@ class _ReviewPlacingPageState extends State {
                                   // info
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id, user_id: user_id)),
+                                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id, user_id: user_id, restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location, restaurant_name: restaurant_name,)),
                                     ); // , ipv ;
                                 });
                               }

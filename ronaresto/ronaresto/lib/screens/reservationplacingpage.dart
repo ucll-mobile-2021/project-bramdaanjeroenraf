@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:ronaresto/models/reservation.dart';
 import 'package:ronaresto/services/database.dart';
-import 'package:ronaresto/screens/qrpage.dart';
+import 'package:ronaresto/screens/qrrespage.dart';
 import 'package:intl/intl.dart';
 
 class ReservationPage extends StatefulWidget {
@@ -11,16 +11,24 @@ class ReservationPage extends StatefulWidget {
   final String restaurant_id;
   final String user_id;
 
-  ReservationPage({Key key, @required String this.restaurant_id, String this.user_id}) : super(key: key);
+  final String restaurant_name;
+  final int restaurant_tafel;
+  final String restaurant_location;
+
+  ReservationPage({Key key, @required String this.restaurant_id, String this.user_id, int this.restaurant_tafel, String this.restaurant_location, this.restaurant_name}) : super(key: key);
 
   @override
-  _ReservationPageState createState() => _ReservationPageState(restaurant_id, user_id);
+  _ReservationPageState createState() => _ReservationPageState(restaurant_id, user_id, restaurant_name, restaurant_tafel, restaurant_location);
 }
 
 class _ReservationPageState extends State {
 
   String restaurant_id;
   String user_id;
+
+  String restaurant_name;
+  int restaurant_tafel;
+  String restaurant_location;
 
   DateTime selectedDate;
 
@@ -29,9 +37,13 @@ class _ReservationPageState extends State {
   final _reservation = Reservation();
   final _formKey = GlobalKey<FormState>();
 
-  _ReservationPageState(String restaurant_id, String user_id){
+  _ReservationPageState(String restaurant_id, String user_id, String restaurant_name, int restaurant_tafel, String restaurant_location){
     this.restaurant_id = restaurant_id;
     this.user_id = user_id;
+
+    this.restaurant_name = restaurant_name;
+    this.restaurant_tafel = restaurant_tafel;
+    this.restaurant_location = restaurant_location;
   }
 
   @override
@@ -120,7 +132,7 @@ class _ReservationPageState extends State {
                                 createReservation(_reservation.number, _reservation.timeslot+":00", _reservation.date, user_id, restaurant_id);
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (contex) => QrPage(user_id: user_id)),
+                                  MaterialPageRoute(builder: (contex) => QrResPage(user_id: user_id, restaurant_name: restaurant_name, restaurant_tafel: restaurant_tafel, restaurant_id: restaurant_id, restaurant_location: restaurant_location)),
                                 ); // , ipv ;
                               },
                               child: Text('Plaats reservatie'),

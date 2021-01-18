@@ -71,6 +71,23 @@ Future<List<dynamic>> findRestaurant(String name)  async {
   return info;
 }
 
+Future<List<dynamic>> findRestaurantByID(String id)  async {
+  var conn = await MySqlConnection.connect(settings);
+  var results =  await conn.query('SELECT `restaurant_id`, `name`, `location` FROM `Restaurant` WHERE restaurant_id = ?', [id]);
+
+  var info = new List(3);
+
+  if (results.length > 0) {
+    for (var row in results) {
+      info[0] = row[0].toString();
+      info[1] = row[1].toString();
+      info[2] = row[2].toString();
+    }
+  }
+  conn.close();
+  return info;
+}
+
 Future<List<dynamic>> placeReview(String text, int stars, String user_id, String restaurant_id) async {
   var conn = await MySqlConnection.connect(settings);
   await conn.query('INSERT INTO Review (text, stars, user_id, restaurant_id) VALUES (?, ?, ?, ?)', [text, stars, user_id, restaurant_id]);

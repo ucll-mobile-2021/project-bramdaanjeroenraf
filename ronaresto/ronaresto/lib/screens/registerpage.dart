@@ -7,12 +7,41 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: RegisterForm(),
-        )
-      ),
+    return WillPopScope(
+      child: Scaffold(
+          body: Center(
+              child: SingleChildScrollView(
+                child: RegisterForm(),
+              )
+          ),
+        ),
+      onWillPop: (){
+        return showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Bent u zeker dat u de registratie wilt verlaten? Uw gegevens worden niet opgeslagen"),
+              actions: <Widget> [
+                FlatButton(
+                  child: Text('Ja'),
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  },
+                ),
+                FlatButton(
+                  child: Text('Nee'),
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

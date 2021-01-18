@@ -26,114 +26,143 @@ class QrPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body : Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 30),
-            Row(
-              children:<Widget>[
-                Expanded(
-                  flex: 2,
-                  child: Container(width: 0.0, height: 0.0),
+    return WillPopScope(
+      child: Scaffold(
+          body : Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 30),
+                Row(
+                  children:<Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Container(width: 0.0, height: 0.0),
+                    ),
+                    Expanded(
+                      flex: 6,
+                      child:
+                      Text('Resto pagina:', style: TextStyle(fontSize: 16)),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(width: 0.0, height: 0.0),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  flex: 6,
-                  child:
-                  Text('Resto pagina:', style: TextStyle(fontSize: 16)),
+                const SizedBox(height: 30),
+                ButtonTheme(
+                  minWidth: 200.0,
+                  padding: const EdgeInsets.all(10.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      final scanResult = _scanQr();
+                      scanResult.then((resp) {
+                        String name = resp.split(";").first;
+                        int tafel = 0;
+                        if( resp.split(";").length == 2){
+                          tafel = int.parse( resp.split(";").last );
+                        }
+                        var info = findRestaurant(name);
+                        info.then((resp2) {
+                          // info
+                          createVisit(int.parse(resp2[0]));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => QrResPage(user_id: user_id, restaurant_name: name, restaurant_tafel: tafel, restaurant_id: resp2[0], restaurant_location: resp2[2])),
+                          ); // , ipv ;
+
+                        });
+                      });
+                    },
+
+                    child: Text('Scan QR code', style: TextStyle(fontSize: 20)),
+                  ),
                 ),
-                Expanded(
-                  flex: 2,
-                  child: Container(width: 0.0, height: 0.0),
+                const SizedBox(height: 30),
+                ButtonTheme(
+                  minWidth: 200.0,
+                  padding: const EdgeInsets.all(10.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SearchRestaurantPage(user_id: user_id)),
+                      ); // , ipv ;
+                    },
+                    child: Text('Zoek restaurant', style: TextStyle(fontSize: 20)),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ButtonTheme(
+                  minWidth: 200.0,
+                  padding: const EdgeInsets.all(10.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      var info = getReservations(user_id);
+                      info.then((resp){
+                        if(resp==null){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ReservationPage(reservations: [],user_id: user_id)),
+                          );
+                        }
+                        else{
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ReservationPage(reservations: resp,user_id: user_id)),
+                          );
+                        }
+                      });// , ipv ;
+                    },
+                    child: Text('Bekijk reservaties', style: TextStyle(fontSize: 20)),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ButtonTheme(
+                  minWidth: 200.0,
+                  padding: const EdgeInsets.all(10.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    },
+                    child: Text('Hoofdmenu', style: TextStyle(fontSize: 20)),
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 30),
-            ButtonTheme(
-              minWidth: 200.0,
-              padding: const EdgeInsets.all(10.0),
-              child: RaisedButton(
-                onPressed: () {
-                  final scanResult = _scanQr();
-                  scanResult.then((resp) {
-                    String name = resp.split(";").first;
-                    int tafel = 0;
-                    if( resp.split(";").length == 2){
-                      tafel = int.parse( resp.split(";").last );
-                    }
-                    var info = findRestaurant(name);
-                    info.then((resp2) {
-                    // info
-                      createVisit(int.parse(resp2[0]));
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => QrResPage(user_id: user_id, restaurant_name: name, restaurant_tafel: tafel, restaurant_id: resp2[0], restaurant_location: resp2[2])),
-                      ); // , ipv ;
-
-                    });
-                  });
-                },
-
-                child: Text('Scan QR code', style: TextStyle(fontSize: 20)),
-              ),
-            ),
-            const SizedBox(height: 30),
-            ButtonTheme(
-              minWidth: 200.0,
-              padding: const EdgeInsets.all(10.0),
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SearchRestaurantPage(user_id: user_id)),
-                  ); // , ipv ;
-                },
-                child: Text('Zoek restaurant', style: TextStyle(fontSize: 20)),
-              ),
-            ),
-            const SizedBox(height: 30),
-            ButtonTheme(
-              minWidth: 200.0,
-              padding: const EdgeInsets.all(10.0),
-              child: RaisedButton(
-                onPressed: () {
-                  var info = getReservations(user_id);
-                  info.then((resp){
-                    if(resp==null){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ReservationPage(reservations: [],user_id: user_id)),
-                      );
-                    }
-                    else{
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ReservationPage(reservations: resp,user_id: user_id)),
-                      );
-                    }
-                  });// , ipv ;
-                },
-                child: Text('Bekijk reservaties', style: TextStyle(fontSize: 20)),
-              ),
-            ),
-            const SizedBox(height: 30),
-            ButtonTheme(
-              minWidth: 200.0,
-              padding: const EdgeInsets.all(10.0),
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
-                },
-                child: Text('Hoofdmenu', style: TextStyle(fontSize: 20)),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+      onWillPop: (){
+        return showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Bent u zeker dat u wilt uitloggen"),
+              actions: <Widget> [
+                FlatButton(
+                  child: Text('Ja'),
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  },
+                ),
+                FlatButton(
+                  child: Text('Nee'),
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }
