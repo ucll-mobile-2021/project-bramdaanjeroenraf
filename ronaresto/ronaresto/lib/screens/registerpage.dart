@@ -9,7 +9,9 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: RegisterForm(),
+        child: SingleChildScrollView(
+          child: RegisterForm(),
+        )
       ),
     );
   }

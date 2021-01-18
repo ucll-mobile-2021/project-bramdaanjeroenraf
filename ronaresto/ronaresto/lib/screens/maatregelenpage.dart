@@ -7,6 +7,7 @@ class MaatregelenPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Maatreggelen')),
       body : Center(
         child:
         SingleChildScrollView(
@@ -14,7 +15,7 @@ class MaatregelenPage extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SingleChildScrollView(),
+              //SingleChildScrollView(),
               const SizedBox(height: 30),
               Row(
                 children:<Widget>[

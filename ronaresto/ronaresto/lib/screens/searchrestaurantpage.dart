@@ -27,7 +27,6 @@ class _SearchRestaurantPageState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Profile')),
         body: Container(
             padding:
             const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),

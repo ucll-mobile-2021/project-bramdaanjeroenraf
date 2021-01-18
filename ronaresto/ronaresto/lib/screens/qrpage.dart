@@ -5,6 +5,7 @@ import 'package:ronaresto/screens/qrrespage.dart';
 import 'package:ronaresto/screens/searchrestaurantpage.dart';
 import 'package:ronaresto/screens/reservationpage.dart';
 import 'package:ronaresto/services/database.dart';
+import 'package:ronaresto/screens/homepage.dart';
 
 class QrPage extends StatelessWidget {
   final String user_id;
@@ -67,7 +68,7 @@ class QrPage extends StatelessWidget {
                       createVisit(int.parse(resp2[0]));
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (contex) => QrResPage(user_id: user_id, restaurant_name: name, restaurant_tafel: tafel, restaurant_id: resp2[0], restaurant_location: resp2[2])),
+                        MaterialPageRoute(builder: (context) => QrResPage(user_id: user_id, restaurant_name: name, restaurant_tafel: tafel, restaurant_id: resp2[0], restaurant_location: resp2[2])),
                       ); // , ipv ;
 
                     });
@@ -85,7 +86,7 @@ class QrPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (contex) => SearchRestaurantPage(user_id: user_id)),
+                    MaterialPageRoute(builder: (context) => SearchRestaurantPage(user_id: user_id)),
                   ); // , ipv ;
                 },
                 child: Text('Zoek restaurant', style: TextStyle(fontSize: 20)),
@@ -102,13 +103,13 @@ class QrPage extends StatelessWidget {
                     if(resp==null){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (contex) => ReservationPage(reservations: [],user_id: user_id)),
+                        MaterialPageRoute(builder: (context) => ReservationPage(reservations: [],user_id: user_id)),
                       );
                     }
                     else{
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (contex) => ReservationPage(reservations: resp,user_id: user_id)),
+                        MaterialPageRoute(builder: (context) => ReservationPage(reservations: resp,user_id: user_id)),
                       );
                     }
                   });// , ipv ;
@@ -122,7 +123,10 @@ class QrPage extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: RaisedButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
                 },
                 child: Text('Hoofdmenu', style: TextStyle(fontSize: 20)),
               ),
