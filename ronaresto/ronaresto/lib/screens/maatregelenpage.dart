@@ -34,17 +34,6 @@ class MaatregelenPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
-              ButtonTheme(
-                minWidth: 200.0,
-                padding: const EdgeInsets.all(10.0),
-                child: RaisedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('Hoofdmenu', style: TextStyle(fontSize: 20)),
-                ),
-              ),
             ],
           ),
         ),

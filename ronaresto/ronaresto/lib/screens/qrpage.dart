@@ -118,20 +118,6 @@ class QrPage extends StatelessWidget {
                     child: Text('Bekijk reservaties', style: TextStyle(fontSize: 20)),
                   ),
                 ),
-                const SizedBox(height: 30),
-                ButtonTheme(
-                  minWidth: 200.0,
-                  padding: const EdgeInsets.all(10.0),
-                  child: RaisedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                      );
-                    },
-                    child: Text('Hoofdmenu', style: TextStyle(fontSize: 20)),
-                  ),
-                ),
               ],
             ),
           ),
