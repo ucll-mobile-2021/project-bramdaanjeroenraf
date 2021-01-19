@@ -43,7 +43,7 @@ class QrResPage extends StatelessWidget {
           const SizedBox(height: 30),
           Text(restaurant_name, style: TextStyle(fontSize: 30)),
           Text(restaurant_location, style: TextStyle(fontSize: 12)),
-          Text('Capacity: ' + restaurant_capacity.toString(), style: TextStyle(fontSize: 20)),
+          Text('Capaciteit: ' + restaurant_capacity.toString(), style: TextStyle(fontSize: 20)),
           if(restaurant_tafel!=0)
           Text('tafel nr: ' + restaurant_tafel.toString(), style: TextStyle(fontSize: 20)),
 
