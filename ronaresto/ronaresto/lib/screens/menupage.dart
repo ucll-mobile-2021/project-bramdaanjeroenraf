@@ -9,6 +9,8 @@ class MenuPage extends StatelessWidget {
   final int restaurant_tafel;
   final String user_id;
 
+  bool alert = true;
+
   MenuPage({Key key, @required List<dynamic> this.dishes, String this.restaurant_id, int this.restaurant_tafel, String this.user_id}) : super(key: key);
 
   Widget getList(){
@@ -64,7 +66,52 @@ class MenuPage extends StatelessWidget {
         body: body(context),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            createAlert(int.parse(restaurant_id), restaurant_tafel);
+            print(alert);
+            if(alert){
+              return showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text("Wilt u een ober roepen?"),
+                    actions: <Widget> [
+                      FlatButton(
+                        child: Text('Ja'),
+                        onPressed: (){
+                          alert = false;
+                          wait();
+                          createAlert(int.parse(restaurant_id), restaurant_tafel);
+                          Navigator.of(context).pop(); // , ipv ;
+                        },
+                      ),
+                      FlatButton(
+                        child: Text('Nee'),
+                        onPressed: (){
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+            else{
+              return showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text("De ober is verwittigd"),
+                    actions: <Widget> [
+                      FlatButton(
+                        child: Text('ok'),
+                        onPressed: (){
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
           },
           child: Icon(Icons.hail),
         ),
@@ -75,5 +122,11 @@ class MenuPage extends StatelessWidget {
         body: body(context),
       );
     }
+  }
+
+  void wait() {
+    Future.delayed(Duration(seconds: 30), () {
+      alert = true;
+    });
   }
 }
