@@ -6,7 +6,7 @@ import 'package:ronaresto/services/database.dart';
 import 'package:ronaresto/screens/qrrespage.dart';
 import 'package:intl/intl.dart';
 
-class ReservationPage extends StatefulWidget {
+class ReservationPlacingPage extends StatefulWidget {
 
   final String restaurant_id;
   final String user_id;
@@ -15,7 +15,7 @@ class ReservationPage extends StatefulWidget {
   final int restaurant_tafel;
   final String restaurant_location;
 
-  ReservationPage({Key key, @required String this.restaurant_id, String this.user_id, int this.restaurant_tafel, String this.restaurant_location, this.restaurant_name}) : super(key: key);
+  ReservationPlacingPage({Key key, @required String this.restaurant_id, String this.user_id, int this.restaurant_tafel, String this.restaurant_location, this.restaurant_name}) : super(key: key);
 
   @override
   _ReservationPageState createState() => _ReservationPageState(restaurant_id, user_id, restaurant_name, restaurant_tafel, restaurant_location);
@@ -58,6 +58,7 @@ class _ReservationPageState extends State {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          const SizedBox(height: 30),
                           if(selectedDate != null)
                             Text("Gekozen datum: " + _reservation.date),
                           if(selectedDate != null)

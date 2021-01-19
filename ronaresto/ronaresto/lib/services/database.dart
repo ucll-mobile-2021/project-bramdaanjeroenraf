@@ -98,7 +98,7 @@ Future<List<dynamic>> placeReview(String text, int stars, String user_id, String
 
 Future<List<dynamic>> reviews(String restaurant_id)  async {
   var conn = await MySqlConnection.connect(settings);
-  var results =  await conn.query('SELECT `text`, `stars`, `user_id` FROM `Review` WHERE restaurant_id = ? ORDER BY `review_id` DESC LIMIT 3', [restaurant_id]);
+  var results =  await conn.query('SELECT `text`, `stars`, `user_id` FROM `Review` WHERE restaurant_id = ? ORDER BY `review_id` DESC LIMIT 7', [restaurant_id]);
 
   if (results.length > 0){
     var reviews = new List(results.length);

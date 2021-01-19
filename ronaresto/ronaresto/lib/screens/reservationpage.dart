@@ -34,10 +34,21 @@ class ReservationPage extends StatelessWidget {
                                 child: Text('Ja'),
                                 onPressed: (){
                                   deleteReservation(reservations[index][4]);
-                                  Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => QrPage(user_id: user_id)),
-                                  ); // , ipv ;
+                                  var info = getReservations(user_id);
+                                  info.then((resp){
+                                    if(resp==null){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => ReservationPage(reservations: [],user_id: user_id)),
+                                      );
+                                    }
+                                    else{
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => ReservationPage(reservations: resp,user_id: user_id)),
+                                      );
+                                    }
+                                  });// , ipv ;
                                 },
                               ),
                               FlatButton(
@@ -63,18 +74,27 @@ class ReservationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body : Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Container(
-                height: 400.0,
-                child: getList()
+    return WillPopScope(
+        child: Scaffold(
+          body : Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('Reservations:'),
+                Container(
+                    height: 400.0,
+                    child: getList()
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+        onWillPop: (){
+          return Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => QrPage(user_id: user_id)),
+          );
+        }
     );
   }
 

@@ -41,13 +41,11 @@ class MenuPage extends StatelessWidget {
     }
     return child;
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
+  
+  Widget body(BuildContext context){
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
           children: <Widget>[
             Container(
                 height: 500.0,
@@ -55,14 +53,27 @@ class MenuPage extends StatelessWidget {
             ),
             //getList(),
           ]
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          createAlert(int.parse(restaurant_id), restaurant_tafel);
-        },
-        child: Icon(Icons.hail),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if(restaurant_tafel!=0){
+      return Scaffold(
+        body: body(context),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            createAlert(int.parse(restaurant_id), restaurant_tafel);
+          },
+          child: Icon(Icons.hail),
+        ),
+      );
+    }
+    else{
+      return Scaffold(
+        body: body(context),
+      );
+    }
   }
 }

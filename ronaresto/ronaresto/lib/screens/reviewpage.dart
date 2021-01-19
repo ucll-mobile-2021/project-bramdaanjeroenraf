@@ -27,6 +27,7 @@ class ReviewPage extends StatelessWidget {
                 children: <Widget>[
                   Text(reviews[index][2]+" : "+reviews[index][1]+" sterren" , style: TextStyle(fontSize: 20)),
                   Text(reviews[index][0], style: TextStyle(fontSize: 12)),
+                  const SizedBox(height: 5),
                 ]
             );
           }
@@ -43,6 +44,7 @@ class ReviewPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                Text('Beoordelingen:'),
                 Container(
                     height: 200.0,
                     child: getList()

@@ -113,8 +113,7 @@ class QrResPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (contex) =>
-                    ReservationPage(
-                      restaurant_id: restaurant_id, user_id: user_id, restaurant_name: restaurant_name,restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location,)),
+                    ReservationPlacingPage(restaurant_id: restaurant_id, user_id: user_id, restaurant_name: restaurant_name,restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location,)),
               );
             },
             child: Text('Maak een reservatie'),
