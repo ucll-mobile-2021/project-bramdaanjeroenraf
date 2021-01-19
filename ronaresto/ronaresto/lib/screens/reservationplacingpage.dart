@@ -133,10 +133,9 @@ class _ReservationPageState extends State {
                           if(_reservation.timeslot != null)
                             ElevatedButton(
                               onPressed: () {
-
                                 var currentReservations = checkReservations(user_id, restaurant_id, _reservation.date);
                                 currentReservations.then((resp){
-                                  if(resp[0] == null){
+                                  if(resp == null){
                                     createReservation(_reservation.number, _reservation.timeslot+":00", _reservation.date, user_id, restaurant_id);
                                     Navigator.push(
                                       context,

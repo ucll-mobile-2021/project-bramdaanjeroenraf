@@ -32,8 +32,8 @@ class ReservationPage extends StatelessWidget {
                             actions: <Widget> [
                               FlatButton(
                                 child: Text('Ja'),
-                                onPressed: (){
-                                  deleteReservation(reservations[index][4]);
+                                onPressed: () async {
+                                  await deleteReservation(reservations[index][4]);
                                   var info = getReservations(user_id);
                                   info.then((resp){
                                     if(resp==null){
