@@ -14,11 +14,12 @@ class ReservationPlacingPage extends StatefulWidget {
   final String restaurant_name;
   final int restaurant_tafel;
   final String restaurant_location;
+  final int restaurant_capacity;
 
-  ReservationPlacingPage({Key key, @required String this.restaurant_id, String this.user_id, int this.restaurant_tafel, String this.restaurant_location, this.restaurant_name}) : super(key: key);
+  ReservationPlacingPage({Key key, @required String this.restaurant_id, String this.user_id, int this.restaurant_tafel, String this.restaurant_location, String this.restaurant_name, int this.restaurant_capacity}) : super(key: key);
 
   @override
-  _ReservationPageState createState() => _ReservationPageState(restaurant_id, user_id, restaurant_name, restaurant_tafel, restaurant_location);
+  _ReservationPageState createState() => _ReservationPageState(restaurant_id, user_id, restaurant_name, restaurant_tafel, restaurant_location, restaurant_capacity);
 }
 
 class _ReservationPageState extends State {
@@ -29,6 +30,7 @@ class _ReservationPageState extends State {
   String restaurant_name;
   int restaurant_tafel;
   String restaurant_location;
+  int restaurant_capacity;
 
   DateTime selectedDate;
 
@@ -37,13 +39,14 @@ class _ReservationPageState extends State {
   final _reservation = Reservation();
   final _formKey = GlobalKey<FormState>();
 
-  _ReservationPageState(String restaurant_id, String user_id, String restaurant_name, int restaurant_tafel, String restaurant_location){
+  _ReservationPageState(String restaurant_id, String user_id, String restaurant_name, int restaurant_tafel, String restaurant_location, int restaurant_capacity){
     this.restaurant_id = restaurant_id;
     this.user_id = user_id;
 
     this.restaurant_name = restaurant_name;
     this.restaurant_tafel = restaurant_tafel;
     this.restaurant_location = restaurant_location;
+    this.restaurant_capacity = restaurant_capacity;
   }
 
   @override
@@ -100,8 +103,8 @@ class _ReservationPageState extends State {
                                 if (value.isEmpty) {
                                   return 'Geef alstublieft een aantal personen in.';
                                 }
-                                if (int.tryParse(value) > 10 || int.tryParse(value) < 0 ){
-                                  return 'Geef alstublieft een nummer tussen 0 en 10.';
+                                if (int.tryParse(value) > restaurant_capacity || int.tryParse(value) < 1 ){
+                                  return 'Geef alstublieft een nummer tussen 1 en '+restaurant_capacity.toString();
                                 }
                                 else return null;
                               },
@@ -133,7 +136,7 @@ class _ReservationPageState extends State {
                                 createReservation(_reservation.number, _reservation.timeslot+":00", _reservation.date, user_id, restaurant_id);
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (contex) => QrResPage(user_id: user_id, restaurant_name: restaurant_name, restaurant_tafel: restaurant_tafel, restaurant_id: restaurant_id, restaurant_location: restaurant_location)),
+                                  MaterialPageRoute(builder: (contex) => QrResPage(user_id: user_id, restaurant_name: restaurant_name, restaurant_tafel: restaurant_tafel, restaurant_id: restaurant_id, restaurant_location: restaurant_location, restaurant_capacity: restaurant_capacity,)),
                                 ); // , ipv ;
                               },
                               child: Text('Plaats reservatie'),

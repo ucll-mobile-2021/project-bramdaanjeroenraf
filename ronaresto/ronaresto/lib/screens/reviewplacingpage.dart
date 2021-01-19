@@ -11,11 +11,12 @@ class ReviewPlacingPage extends StatefulWidget {
   final String restaurant_name;
   final int restaurant_tafel;
   final String restaurant_location;
+  final int restaurant_capacity;
 
-  ReviewPlacingPage({Key key, @required String this.restaurant_id, String this.user_id, int this.restaurant_tafel, String this.restaurant_location, String this.restaurant_name}) : super(key: key);
+  ReviewPlacingPage({Key key, @required String this.restaurant_id, String this.user_id, int this.restaurant_tafel, String this.restaurant_location, String this.restaurant_name, int this.restaurant_capacity}) : super(key: key);
 
   @override
-  _ReviewPlacingPageState createState() => _ReviewPlacingPageState(restaurant_id, user_id,restaurant_tafel,restaurant_location,restaurant_name);
+  _ReviewPlacingPageState createState() => _ReviewPlacingPageState(restaurant_id, user_id,restaurant_tafel,restaurant_location,restaurant_name, restaurant_capacity);
 }
 
 class _ReviewPlacingPageState extends State {
@@ -26,17 +27,19 @@ class _ReviewPlacingPageState extends State {
   String restaurant_name;
   int restaurant_tafel;
   String restaurant_location;
+  int restaurant_capacity;
 
   final _review = Review();
   final _formKey = GlobalKey<FormState>();
 
-  _ReviewPlacingPageState(String restaurant_id, String user_id, int restaurant_tafel, String restaurant_location, String restaurant_name){
+  _ReviewPlacingPageState(String restaurant_id, String user_id, int restaurant_tafel, String restaurant_location, String restaurant_name, int restaurant_capacity){
     this.restaurant_id = restaurant_id;
     this.user_id = user_id;
 
     this.restaurant_name = restaurant_name;
     this.restaurant_location = restaurant_location;
     this.restaurant_tafel = restaurant_tafel;
+    this.restaurant_capacity = restaurant_capacity;
   }
 
   @override
@@ -90,7 +93,7 @@ class _ReviewPlacingPageState extends State {
                                   // info
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id, user_id: user_id, restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location, restaurant_name: restaurant_name,)),
+                                      MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id, user_id: user_id, restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location, restaurant_name: restaurant_name,restaurant_capacity: restaurant_capacity,)),
                                     ); // , ipv ;
                                 });
                               }

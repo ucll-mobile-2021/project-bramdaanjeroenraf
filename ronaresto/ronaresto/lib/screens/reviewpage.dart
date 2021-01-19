@@ -12,8 +12,9 @@ class ReviewPage extends StatelessWidget {
   final String restaurant_name;
   final int restaurant_tafel;
   final String restaurant_location;
+  final int restaurant_capacity;
 
-  ReviewPage({Key key, @required List<dynamic> this.reviews, String this.restaurant_id, String this.user_id, int this.restaurant_tafel, String this.restaurant_location, this.restaurant_name}) : super(key: key);
+  ReviewPage({Key key, @required List<dynamic> this.reviews, String this.restaurant_id, String this.user_id, int this.restaurant_tafel, String this.restaurant_location, String this.restaurant_name, int this.restaurant_capacity}) : super(key: key);
 
   Widget getList(){
     Widget child;
@@ -27,7 +28,7 @@ class ReviewPage extends StatelessWidget {
                 children: <Widget>[
                   Text(reviews[index][2]+" : "+reviews[index][1]+" sterren" , style: TextStyle(fontSize: 20)),
                   Text(reviews[index][0], style: TextStyle(fontSize: 12)),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 10),
                 ]
             );
           }
@@ -56,7 +57,7 @@ class ReviewPage extends StatelessWidget {
                       if(user_id!=null){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (contex) => ReviewPlacingPage(restaurant_id: restaurant_id, user_id: user_id, restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location, restaurant_name: restaurant_name,)),
+                          MaterialPageRoute(builder: (contex) => ReviewPlacingPage(restaurant_id: restaurant_id, user_id: user_id, restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location, restaurant_name: restaurant_name,restaurant_capacity: restaurant_capacity,)),
                         ); // , ipv ;
                       }
                     },
@@ -70,7 +71,7 @@ class ReviewPage extends StatelessWidget {
         onWillPop: (){
           return Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => QrResPage(user_id: user_id, restaurant_name: restaurant_name, restaurant_tafel: restaurant_tafel, restaurant_id: restaurant_id, restaurant_location: restaurant_location)),
+            MaterialPageRoute(builder: (context) => QrResPage(user_id: user_id, restaurant_name: restaurant_name, restaurant_tafel: restaurant_tafel, restaurant_id: restaurant_id, restaurant_location: restaurant_location, restaurant_capacity: restaurant_capacity,)),
           );
 
         },

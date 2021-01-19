@@ -78,7 +78,7 @@ class _SearchRestaurantPageState extends State {
                                     //createVisit(int.parse(resp[0]));
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (contex) => QrResPage(user_id: user_id, restaurant_name: resp[1], restaurant_tafel: 0, restaurant_id: resp[0], restaurant_location: resp[2])),
+                                      MaterialPageRoute(builder: (contex) => QrResPage(user_id: user_id, restaurant_name: resp[1], restaurant_tafel: 0, restaurant_id: resp[0], restaurant_location: resp[2], restaurant_capacity: int.tryParse(resp[3]),)),
                                     ); // , ipv ;
                                   }
                                 });

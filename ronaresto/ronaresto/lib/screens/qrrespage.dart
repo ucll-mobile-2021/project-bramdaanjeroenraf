@@ -13,8 +13,9 @@ class QrResPage extends StatelessWidget {
   final String restaurant_name;
   final int restaurant_tafel;
   final String restaurant_location;
+  final int restaurant_capacity;
 
-  QrResPage({Key key, @required String this.user_id,String this.restaurant_name, int this.restaurant_tafel, String this.restaurant_id, String this.restaurant_location}) : super(key: key);
+  QrResPage({Key key, @required String this.user_id,String this.restaurant_name, int this.restaurant_tafel, String this.restaurant_id, String this.restaurant_location, int this.restaurant_capacity}) : super(key: key);
 
   Widget body(BuildContext context){
     return Center(
@@ -42,7 +43,7 @@ class QrResPage extends StatelessWidget {
           const SizedBox(height: 30),
           Text(restaurant_name, style: TextStyle(fontSize: 30)),
           Text(restaurant_location, style: TextStyle(fontSize: 12)),
-          Text('ID: ' + restaurant_id, style: TextStyle(fontSize: 20)),
+          Text('Capacity: ' + restaurant_capacity.toString(), style: TextStyle(fontSize: 20)),
           if(restaurant_tafel!=0)
           Text('tafel nr: ' + restaurant_tafel.toString(), style: TextStyle(fontSize: 20)),
 
@@ -60,7 +61,8 @@ class QrResPage extends StatelessWidget {
                           user_id: user_id,
                           restaurant_tafel: restaurant_tafel,
                           restaurant_location: restaurant_location,
-                          restaurant_name: restaurant_name,)),
+                          restaurant_name: restaurant_name,
+                          restaurant_capacity: restaurant_capacity,)),
                   );
                 }
                 else {
@@ -72,7 +74,8 @@ class QrResPage extends StatelessWidget {
                           user_id: user_id,
                           restaurant_tafel: restaurant_tafel,
                           restaurant_location: restaurant_location,
-                          restaurant_name: restaurant_name,)),
+                          restaurant_name: restaurant_name,
+                          restaurant_capacity: restaurant_capacity,)),
                   ); // , ipv ;
                 }
               });
@@ -113,7 +116,7 @@ class QrResPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (contex) =>
-                    ReservationPlacingPage(restaurant_id: restaurant_id, user_id: user_id, restaurant_name: restaurant_name,restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location,)),
+                    ReservationPlacingPage(restaurant_id: restaurant_id, user_id: user_id, restaurant_name: restaurant_name,restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location,restaurant_capacity: restaurant_capacity,)),
               );
             },
             child: Text('Maak een reservatie'),

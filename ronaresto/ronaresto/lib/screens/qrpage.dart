@@ -69,7 +69,7 @@ class QrPage extends StatelessWidget {
                           createVisit(int.parse(resp2[0]));
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => QrResPage(user_id: user_id, restaurant_name: name, restaurant_tafel: tafel, restaurant_id: resp2[0], restaurant_location: resp2[2])),
+                            MaterialPageRoute(builder: (context) => QrResPage(user_id: user_id, restaurant_name: name, restaurant_tafel: tafel, restaurant_id: resp2[0], restaurant_location: resp2[2], restaurant_capacity: int.tryParse(resp2[3]),)),
                           ); // , ipv ;
 
                         });
