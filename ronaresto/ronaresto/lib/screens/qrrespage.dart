@@ -111,15 +111,16 @@ class QrResPage extends StatelessWidget {
             },
             child: Text('Menu'),
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (contex) =>
-                    ReservationPlacingPage(restaurant_id: restaurant_id, user_id: user_id, restaurant_name: restaurant_name,restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location,restaurant_capacity: restaurant_capacity,)),
-              );
-            },
-            child: Text('Maak een reservatie'),
+          if(user_id!=null)
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (contex) =>
+                      ReservationPlacingPage(restaurant_id: restaurant_id, user_id: user_id, restaurant_name: restaurant_name,restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location,restaurant_capacity: restaurant_capacity,)),
+                );
+              },
+              child: Text('Maak een reservatie'),
           ),
         ],
       ),
