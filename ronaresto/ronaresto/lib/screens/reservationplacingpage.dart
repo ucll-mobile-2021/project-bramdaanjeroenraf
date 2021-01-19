@@ -133,11 +133,55 @@ class _ReservationPageState extends State {
                           if(_reservation.timeslot != null)
                             ElevatedButton(
                               onPressed: () {
-                                createReservation(_reservation.number, _reservation.timeslot+":00", _reservation.date, user_id, restaurant_id);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (contex) => QrResPage(user_id: user_id, restaurant_name: restaurant_name, restaurant_tafel: restaurant_tafel, restaurant_id: restaurant_id, restaurant_location: restaurant_location, restaurant_capacity: restaurant_capacity,)),
-                                ); // , ipv ;
+
+                                var currentReservations = checkReservations(user_id, restaurant_id, _reservation.date);
+                                currentReservations.then((resp){
+                                  if(resp[0] == null){
+                                    createReservation(_reservation.number, _reservation.timeslot+":00", _reservation.date, user_id, restaurant_id);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (contex) => QrResPage(user_id: user_id, restaurant_name: restaurant_name, restaurant_tafel: restaurant_tafel, restaurant_id: restaurant_id, restaurant_location: restaurant_location, restaurant_capacity: restaurant_capacity,)),
+                                    );
+                                  }
+                                  else{
+                                    print(resp);
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text("U hebt die dag reeds een reservatie, wilt u deze nieuwe toch toevoegen?"),
+                                          content: ListView.builder(
+                                            itemCount: resp.length,
+                                              itemBuilder: (BuildContext context, int index){
+                                                return Text('Om ' + _hourValidator(resp[index][1]) + ' met ' + resp[index][0]);
+                                              }
+                                          ),
+                                          actions: <Widget> [
+                                            FlatButton(
+                                              child: Text('Ja'),
+                                              onPressed: (){
+                                                createReservation(_reservation.number, _reservation.timeslot+":00", _reservation.date, user_id, restaurant_id);
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(builder: (contex) => QrResPage(user_id: user_id, restaurant_name: restaurant_name, restaurant_tafel: restaurant_tafel, restaurant_id: restaurant_id, restaurant_location: restaurant_location, restaurant_capacity: restaurant_capacity,)),
+                                                ); // , ipv ;
+                                              },
+                                            ),
+                                            FlatButton(
+                                              child: Text('Nee'),
+                                              onPressed: (){
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(builder: (contex) => QrResPage(user_id: user_id, restaurant_name: restaurant_name, restaurant_tafel: restaurant_tafel, restaurant_id: restaurant_id, restaurant_location: restaurant_location, restaurant_capacity: restaurant_capacity,)),
+                                                ); // , ipv ;
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }
+                                });
                               },
                               child: Text('Plaats reservatie'),
                             ),
@@ -216,6 +260,16 @@ class _ReservationPageState extends State {
       );
     });
   }
+
+  String _hourValidator(String value){
+    String pattern = r'^[0-9]:[0-9]{2}:$';
+    RegExp regExp = new RegExp(pattern);
+    if (regExp.hasMatch(value)) {
+      return value.substring(0,4);
+    }
+    return value;
+  }
+
 }
 
 

@@ -271,5 +271,33 @@ void deleteReservation(String reservation_id) async{
   conn.close();
 }
 
+Future<List<dynamic>> checkReservations(String user_id, String restaurant_id, String date)  async {
+  var conn = await MySqlConnection.connect(settings);
+  var results =  await conn.query('SELECT `number`, `timeslot` FROM `Reservation` WHERE user_id = ? AND restaurant_id = ? AND date = ? ', [user_id, restaurant_id, date]);
+
+  if (results.length > 0) {
+    print('result length: ' + results.length.toString());
+    var reservations = new List(results.length);
+    int i = 0;
+
+    if (results.length > 0) {
+      for (var row in results) {
+        reservations[i] = new List(2);
+        reservations[i][0] = row[0].toString();
+        reservations[i][1] = row[1].toString().substring(0, 5);
+        i++;
+      }
+      conn.close();
+      print(reservations);
+      return reservations;
+    }
+    else {
+      conn.close();
+      return null;
+    }
+  }
+}
+
+
 
 
