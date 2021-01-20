@@ -91,11 +91,14 @@ class _VisitFormState extends State<VisitForm> {
             const SizedBox(height: 60),
             ElevatedButton(
               onPressed: () {
-                db.loginGuest(tecEmail.text, tecPhone.text, tecName.text);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => QrPage())
-                );
+                final form = _fk.currentState;
+                if(form.validate()) {
+                  db.loginGuest(tecEmail.text, tecPhone.text, tecName.text);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => QrPage())
+                  );
+                }
               },
               child: Text('Doorgaan'),
             ),
