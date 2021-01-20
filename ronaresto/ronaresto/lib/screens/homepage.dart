@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ronaresto/services/htmlloader.dart';
 import 'maatregelenpage.dart';
 import 'loginpage.dart';
@@ -22,7 +23,7 @@ class HomePage extends StatelessWidget {
                   FlatButton(
                     child: Text('Ja'),
                     onPressed: (){
-                      Navigator.pop(context,true); // , ipv ;
+                      SystemNavigator.pop();
                     },
                   ),
                   FlatButton(
