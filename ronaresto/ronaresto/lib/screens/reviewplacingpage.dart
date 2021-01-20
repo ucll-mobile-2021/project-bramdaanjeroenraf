@@ -88,10 +88,10 @@ class _ReviewPlacingPageState extends State {
                           ElevatedButton(
                             onPressed: () {
                               if(!bussy){
-                                bussy = true;
                                 final form = _formKey.currentState;
                                 if(form.validate()){
                                   form.save();
+                                  bussy = true;
                                   var info = placeReview(_review.text, _review.stars, user_id, restaurant_id);
                                   info.then((resp) {
                                     // info
