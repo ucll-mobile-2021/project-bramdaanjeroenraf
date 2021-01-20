@@ -94,30 +94,31 @@ class QrPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30),
-                ButtonTheme(
-                  minWidth: 200.0,
-                  padding: const EdgeInsets.all(10.0),
-                  child: RaisedButton(
-                    onPressed: () {
-                      var info = getReservations(user_id);
-                      info.then((resp){
-                        if(resp==null){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ReservationPage(reservations: [],user_id: user_id)),
-                          );
-                        }
-                        else{
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ReservationPage(reservations: resp,user_id: user_id)),
-                          );
-                        }
-                      });// , ipv ;
-                    },
-                    child: Text('Bekijk reservaties', style: TextStyle(fontSize: 20)),
+                if(user_id!=null)
+                  ButtonTheme(
+                    minWidth: 200.0,
+                    padding: const EdgeInsets.all(10.0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        var info = getReservations(user_id);
+                        info.then((resp){
+                          if(resp==null){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ReservationPage(reservations: [],user_id: user_id)),
+                            );
+                          }
+                          else{
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ReservationPage(reservations: resp,user_id: user_id)),
+                            );
+                          }
+                        });// , ipv ;
+                      },
+                      child: Text('Bekijk reservaties', style: TextStyle(fontSize: 20)),
+                    ),
                   ),
-                ),
               ],
             ),
           ),
