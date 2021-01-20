@@ -29,6 +29,8 @@ class _ReviewPlacingPageState extends State {
   String restaurant_location;
   int restaurant_capacity;
 
+  bool bussy = false;
+
   final _review = Review();
   final _formKey = GlobalKey<FormState>();
 
@@ -85,17 +87,20 @@ class _ReviewPlacingPageState extends State {
 
                           ElevatedButton(
                             onPressed: () {
-                              final form = _formKey.currentState;
-                              if(form.validate()){
-                                form.save();
-                                var info = placeReview(_review.text, _review.stars, user_id, restaurant_id);
-                                info.then((resp) {
-                                  // info
+                              if(!bussy){
+                                bussy = true;
+                                final form = _formKey.currentState;
+                                if(form.validate()){
+                                  form.save();
+                                  var info = placeReview(_review.text, _review.stars, user_id, restaurant_id);
+                                  info.then((resp) {
+                                    // info
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(builder: (contex) => ReviewPage(reviews: resp, restaurant_id: restaurant_id, user_id: user_id, restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location, restaurant_name: restaurant_name,restaurant_capacity: restaurant_capacity,)),
                                     ); // , ipv ;
-                                });
+                                  });
+                                }
                               }
                             },
                             child: Text('Plaats beoordeling'),

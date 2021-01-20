@@ -128,7 +128,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   String _emailValidator(String value){
-    String pattern = r'^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]+$';
+    String pattern = r'^[a-zA-Z0-9.-]+@[a-zA-Z]+\.[a-zA-Z]+$';
     RegExp regExp = new RegExp(pattern);
     if (!regExp.hasMatch(value)) {
       return 'geen geldige mail';

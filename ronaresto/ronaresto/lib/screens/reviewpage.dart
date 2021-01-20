@@ -47,7 +47,7 @@ class ReviewPage extends StatelessWidget {
               children: <Widget>[
                 Text('Beoordelingen:'),
                 Container(
-                    height: 200.0,
+                    height: 400.0,
                     child: getList()
                 ),
 
