@@ -48,7 +48,7 @@ class AllergyPage extends StatelessWidget {
               flex: 6,
               child: Column(
                 children: [
-                  Text(dish[1], style: TextStyle(fontSize: 48)),
+                  Text(dish[1], style: TextStyle(fontSize: 30)),
                   Text('Prijs: '+dish[2]+' euro', style: TextStyle(fontSize: 16)),
                   Text(dish[3], style: TextStyle(fontSize: 16)),
                   Container(width: 0.0, height: 20.0),
