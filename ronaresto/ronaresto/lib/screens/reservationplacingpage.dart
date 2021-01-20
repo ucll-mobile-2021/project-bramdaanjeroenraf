@@ -154,6 +154,7 @@ class _ReservationPageState extends State {
                                           return AlertDialog(
                                             title: Text("U hebt die dag reeds een reservatie, wilt u deze nieuwe toch toevoegen?"),
                                             content: ListView.builder(
+                                                scrollDirection: Axis.vertical,
                                                 itemCount: resp.length,
                                                 itemBuilder: (BuildContext context, int index){
                                                   return Text('Om ' + _hourValidator(resp[index][1]) + ' met ' + resp[index][0]);
