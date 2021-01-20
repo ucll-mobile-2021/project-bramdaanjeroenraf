@@ -70,7 +70,7 @@ class _ReviewPlacingPageState extends State {
                           ),
                           TextFormField(
                               decoration:
-                              InputDecoration(labelText: 'sterren'),
+                              InputDecoration(labelText: 'Sterren'),
                               keyboardType: TextInputType.number,
                               validator: (value) {
                                 if (value.isEmpty) {

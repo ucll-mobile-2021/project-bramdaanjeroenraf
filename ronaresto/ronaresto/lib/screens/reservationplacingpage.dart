@@ -149,6 +149,7 @@ class _ReservationPageState extends State {
                                     else{
                                       print(resp);
                                       showDialog(
+                                        barrierDismissible: false,
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(

@@ -42,29 +42,32 @@ class ReviewPage extends StatelessWidget {
     return WillPopScope(
         child: Scaffold(
           body : Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text('Beoordelingen:'),
-                Container(
-                    height: 360.0,
-                    child: getList()
-                ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text('Beoordelingen:'),
 
-                if(user_id!=null)
-                  ElevatedButton(
-                    onPressed: () {
-                      if(user_id!=null){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (contex) => ReviewPlacingPage(restaurant_id: restaurant_id, user_id: user_id, restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location, restaurant_name: restaurant_name,restaurant_capacity: restaurant_capacity,)),
-                        ); // , ipv ;
-                      }
-                    },
-                    child: Text('Voeg beoordeling toe'),
+                  Container(
+                      height: 360.0,
+                      child: getList()
                   ),
 
-              ],
+                  if(user_id!=null)
+                    ElevatedButton(
+                      onPressed: () {
+                        if(user_id!=null){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (contex) => ReviewPlacingPage(restaurant_id: restaurant_id, user_id: user_id, restaurant_tafel: restaurant_tafel, restaurant_location: restaurant_location, restaurant_name: restaurant_name,restaurant_capacity: restaurant_capacity,)),
+                          ); // , ipv ;
+                        }
+                      },
+                      child: Text('Voeg beoordeling toe'),
+                    ),
+
+                ],
+              ),
             ),
           ),
         ),
