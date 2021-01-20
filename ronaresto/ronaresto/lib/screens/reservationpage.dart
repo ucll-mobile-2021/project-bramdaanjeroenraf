@@ -85,7 +85,7 @@ class ReservationPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('Reservations:'),
+                Text('Reservaties:'),
                 Container(
                     height: 400.0,
                     child: getList()

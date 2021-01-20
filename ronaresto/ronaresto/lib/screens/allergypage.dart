@@ -20,8 +20,8 @@ class AllergyPage extends StatelessWidget {
           itemBuilder: (BuildContext context, int index){
             return Column(
                 children: <Widget>[
-                  Text(dish[4][index][0] , style: TextStyle(fontSize: 16)),
-                  Text(dish[4][index][1], style: TextStyle(fontSize: 12)),
+                  Text(dish[4][index][0] , style: TextStyle(fontSize: 24)),
+                  Text(dish[4][index][1], style: TextStyle(fontSize: 16)),
                 ]
             );
           }
@@ -36,20 +36,46 @@ class AllergyPage extends StatelessWidget {
       body : Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(dish[1], style: TextStyle(fontSize: 24)),
-            Text('Prijs: '+dish[2]+'euro', style: TextStyle(fontSize: 20)),
-            Text('Beschrijving:', style: TextStyle(fontSize: 20)),
-            Text(dish[3], style: TextStyle(fontSize: 16)),
-            Text('Allergenen:', style: TextStyle(fontSize: 20)),
-            Container(
-                height: 200.0,
-                child: getList()
+          children: [
+            const SizedBox(height: 30),
+        Row(
+          children:<Widget>[
+            Expanded(
+              flex: 2,
+              child: Container(width: 0.0, height: 0.0),
+            ),
+            Expanded(
+              flex: 6,
+              child: Column(
+                children: [
+                  Text(dish[1], style: TextStyle(fontSize: 48)),
+                  Text('Prijs: '+dish[2]+' euro', style: TextStyle(fontSize: 16)),
+                  Text(dish[3], style: TextStyle(fontSize: 16)),
+                  Container(width: 0.0, height: 20.0),
+                  Text('Allergieen:', style: TextStyle(fontSize: 16)),
+                  Container(
+                      height: 200,
+                      child: getList()
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Container(width: 0.0, height: 0.0),
             ),
           ],
         ),
 
+
+
+        ],
+
+
+
       ),
+
+    ),
     );
   }
 }

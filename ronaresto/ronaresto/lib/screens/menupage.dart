@@ -16,10 +16,9 @@ class MenuPage extends StatelessWidget {
   Widget getList(){
     Widget child;
     if(dishes.length == 0){
-      child = Text("geen gerechten teruggevonden", style: TextStyle(fontSize: 30));
+      child = Text("Geen gerechten teruggevonden.", style: TextStyle(fontSize: 30));
     }else{
       child = ListView.builder(
-          shrinkWrap: true,
           itemCount: dishes.length,
           itemBuilder: (BuildContext context, int index){
             return Column(
@@ -36,6 +35,7 @@ class MenuPage extends StatelessWidget {
                     },
                     child: Text('info'),
                   ),
+                  const SizedBox(height: 10),
                 ]
             );
           }
@@ -43,7 +43,7 @@ class MenuPage extends StatelessWidget {
     }
     return child;
   }
-  
+
   Widget body(BuildContext context){
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -61,67 +61,27 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(restaurant_tafel!=0){
-      return Scaffold(
-        body: body(context),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print(alert);
-            if(alert){
-              return showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text("Wilt u een ober roepen?"),
-                    actions: <Widget> [
-                      FlatButton(
-                        child: Text('Ja'),
-                        onPressed: (){
-                          alert = false;
-                          wait();
-                          createAlert(int.parse(restaurant_id), restaurant_tafel);
-                          Navigator.of(context).pop(); // , ipv ;
-                        },
-                      ),
-                      FlatButton(
-                        child: Text('Nee'),
-                        onPressed: (){
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            }
-            else{
-              return showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text("De ober is verwittigd"),
-                    actions: <Widget> [
-                      FlatButton(
-                        child: Text('ok'),
-                        onPressed: (){
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            }
-          },
-          child: Icon(Icons.hail),
+    return WillPopScope(
+      child: Scaffold(
+        body : Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('Menu:'),
+
+                Container(
+                    height: 360.0,
+                    child: getList()
+                ),
+
+              ],
+            ),
+          ),
         ),
-      );
-    }
-    else{
-      return Scaffold(
-        body: body(context),
-      );
-    }
+      ),
+
+    );
   }
 
   void wait() {
