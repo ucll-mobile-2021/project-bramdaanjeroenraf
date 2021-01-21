@@ -9,14 +9,12 @@ class MenuPage extends StatelessWidget {
   final int restaurant_tafel;
   final String user_id;
 
-  bool alert = true;
-
   MenuPage({Key key, @required List<dynamic> this.dishes, String this.restaurant_id, int this.restaurant_tafel, String this.user_id}) : super(key: key);
 
   Widget getList(){
     Widget child;
     if(dishes.length == 0){
-      child = Text("Geen gerechten teruggevonden.", style: TextStyle(fontSize: 30));
+      child = Text("Geen gerechten teruggevonden", style: TextStyle(fontSize: 30), textAlign: TextAlign.center,);
     }else{
       child = ListView.builder(
           itemCount: dishes.length,
@@ -44,21 +42,6 @@ class MenuPage extends StatelessWidget {
     return child;
   }
 
-  Widget body(BuildContext context){
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-          children: <Widget>[
-            Container(
-                height: 500.0,
-                child: getList()
-            ),
-            //getList(),
-          ]
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -83,10 +66,5 @@ class MenuPage extends StatelessWidget {
 
     );
   }
-
-  void wait() {
-    Future.delayed(Duration(seconds: 30), () {
-      alert = true;
-    });
-  }
+  
 }

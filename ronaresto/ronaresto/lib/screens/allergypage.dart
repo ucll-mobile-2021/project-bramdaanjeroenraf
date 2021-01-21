@@ -21,7 +21,7 @@ class AllergyPage extends StatelessWidget {
             return Column(
                 children: <Widget>[
                   Text(dish[4][index][0] , style: TextStyle(fontSize: 24)),
-                  Text(dish[4][index][1], style: TextStyle(fontSize: 16)),
+                  Text(dish[4][index][1], style: TextStyle(fontSize: 16), textAlign: TextAlign.center,),
                 ]
             );
           }
