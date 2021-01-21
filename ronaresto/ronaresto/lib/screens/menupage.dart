@@ -66,5 +66,5 @@ class MenuPage extends StatelessWidget {
 
     );
   }
-  
+
 }

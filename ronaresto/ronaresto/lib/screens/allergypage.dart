@@ -50,7 +50,7 @@ class AllergyPage extends StatelessWidget {
                 children: [
                   Text(dish[1], style: TextStyle(fontSize: 30)),
                   Text('Prijs: '+dish[2]+' euro', style: TextStyle(fontSize: 16)),
-                  Text(dish[3], style: TextStyle(fontSize: 16)),
+                  Text(dish[3], style: TextStyle(fontSize: 16),textAlign: TextAlign.center,),
                   Container(width: 0.0, height: 20.0),
                   Text('Allergieen:', style: TextStyle(fontSize: 16)),
                   Container(
